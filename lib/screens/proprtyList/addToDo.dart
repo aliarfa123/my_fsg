@@ -1,8 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:image_picker/image_picker.dart';
 import 'package:my_fsg/theme/colors.dart';
+import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class AddToDo extends StatefulWidget {
   const AddToDo({Key? key}) : super(key: key);
@@ -12,9 +14,25 @@ class AddToDo extends StatefulWidget {
 }
 
 class _AddToDoState extends State<AddToDo> {
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
   var _image;
 
   Future getImagefromGallery() async {
+    // ignore: deprecated_member_use
     File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -24,6 +42,7 @@ class _AddToDoState extends State<AddToDo> {
 
   @override
   Widget build(BuildContext context) {
+    final format = DateFormat("yyyy-MM-dd");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
@@ -45,7 +64,7 @@ class _AddToDoState extends State<AddToDo> {
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide: BorderSide(color: primary)),
-                    labelText: 'Name',
+                    labelText: 'Title',
                     fillColor: Colors.grey.shade100,
                     filled: true,
                     focusColor: primary,
@@ -64,7 +83,7 @@ class _AddToDoState extends State<AddToDo> {
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide: BorderSide(color: primary)),
-                    labelText: 'Name',
+                    labelText: 'Description',
                     fillColor: Colors.grey.shade100,
                     filled: true,
                     focusColor: primary,
@@ -83,7 +102,7 @@ class _AddToDoState extends State<AddToDo> {
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         borderSide: BorderSide(color: primary)),
-                    labelText: 'Name',
+                    labelText: "${selectedDate.toLocal()}".split(' ')[0],
                     fillColor: Colors.grey.shade100,
                     filled: true,
                     focusColor: primary,
@@ -91,25 +110,10 @@ class _AddToDoState extends State<AddToDo> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20.0),
-                TextFormField(
-                  decoration: InputDecoration(
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(color: primary)),
-                    labelText: 'Name',
-                    fillColor: Colors.grey.shade100,
-                    filled: true,
-                    focusColor: primary,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(new FocusNode());
+                    _selectDate(context);
+                  },
                 ),
                 const SizedBox(height: 20.0),
                 Container(
