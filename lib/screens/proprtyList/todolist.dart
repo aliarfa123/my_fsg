@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_fsg/screens/proprtyList/addToDo.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 class ToDoList extends StatefulWidget {
@@ -128,13 +129,19 @@ class _ToDoListState extends State<ToDoList> {
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Container(
-                      width: 60,
-                      child: Image(
-                        image: AssetImage('assets/images/add_icon.png'),
-                        color: primary,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AddToDo()));
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Container(
+                        width: 60,
+                        child: Image(
+                          image: AssetImage('assets/images/add_icon.png'),
+                          color: primary,
+                        ),
                       ),
                     ),
                   ),
@@ -201,11 +208,6 @@ class _ToDoListState extends State<ToDoList> {
                             checkColor: Colors.white,
                             activeColor: primary,
                             value: this.valuethird3,
-                            // onChanged: (bool value) {
-                            //   setState(() {
-                            //     this.valuefirst = value;
-                            //   });
-                            // },
                           ),
                           Text(
                             'Task 3',
@@ -218,13 +220,19 @@ class _ToDoListState extends State<ToDoList> {
                 ),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Container(
-                      width: 60,
-                      child: Image(
-                        image: AssetImage('assets/images/add_icon.png'),
-                        color: primary,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => AddToDo()));
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Container(
+                        width: 60,
+                        child: Image(
+                          image: AssetImage('assets/images/add_icon.png'),
+                          color: primary,
+                        ),
                       ),
                     ),
                   ),

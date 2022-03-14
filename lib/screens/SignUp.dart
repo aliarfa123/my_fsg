@@ -1,17 +1,34 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/login.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../theme/colors.dart';
+import 'bottomNavBar.dart';
+import 'bottomNavBar2.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+  bool admin;
+  bool cust;
+  SignUp({Key? key, this.admin = false, this.cust = true}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
 }
 
 class _SignUpState extends State<SignUp> {
+  var _image;
+
+  Future getImagefromGallery() async {
+    File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(image.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -189,70 +206,116 @@ class _SignUpState extends State<SignUp> {
                         Align(
                           alignment: Alignment.center,
                           child: Center(
-                            child: Text('Pick an Image'),
+                            child: _image == null
+                                ? Center(
+                                    child: Text(
+                                      "Pick an Image",
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  )
+                                : Image.file(
+                                    _image,
+                                    fit: BoxFit.fill,
+                                  ),
                           ),
                         ),
                         Align(
                           alignment: Alignment.bottomRight,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.image),
+                          child: InkWell(
+                            onTap: () {
+                              getImagefromGallery();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.image),
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomePage(),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 5,
+                    width: MediaQuery.of(context).size.width - 20,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white.withOpacity(0.7)),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                if (widget.admin == true &&
+                                    widget.cust == false) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RootApp(),
+                                    ),
+                                  );
+                                }
+                                if (widget.admin == false &&
+                                    widget.cust == true) {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RootAppCust(),
+                                    ),
+                                  );
+                                } else {}
+                                ;
+                              },
+                              child: Image(
+                                width: MediaQuery.of(context).size.width * 0.6,
+                                image: const AssetImage(
+                                  'assets/images/signup.png',
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                        child: Image(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          image: const AssetImage(
-                            'assets/images/signup.png',
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    "Already Have account?",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  // const SizedBox(height: 15.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyLogin(),
+                        Text(
+                          "Already Have account?",
+                          style: TextStyle(fontSize: 15),
+                        ),
+                        // const SizedBox(height: 15.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyLogin(
+                                      admin: widget.admin,
+                                      cust: widget.cust,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                "LogIn",
+                                style: TextStyle(
+                                  color: primary,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
-                          );
-                        },
-                        child: Text(
-                          "LogIn",
-                          style: TextStyle(
-                            color: primary,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 20.0),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 20.0),
                 ],
               ),
             ),

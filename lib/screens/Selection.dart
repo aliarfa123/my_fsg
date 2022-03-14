@@ -65,12 +65,25 @@ class _SelectionPageState extends State<SelectionPage> {
               child: FloatingActionButton(
                 backgroundColor: primary,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MyLogin(),
-                    ),
-                  );
+                  if (cust == true && admin == true ||
+                      cust == false && admin == false) {
+                    showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                              backgroundColor: primary,
+                              title: Text('Please select one option'),
+                            ));
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyLogin(
+                          admin: admin,
+                          cust: cust,
+                        ),
+                      ),
+                    );
+                  }
                 },
                 child: Icon(
                   Icons.arrow_forward,

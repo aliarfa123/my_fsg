@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/SignUp.dart';
 import 'package:my_fsg/screens/bottomNavBar.dart';
+import 'package:my_fsg/screens/bottomNavBar2.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 import 'Home/realestate.dart';
 
 class MyLogin extends StatefulWidget {
-  const MyLogin({Key? key}) : super(key: key);
+  bool admin;
+  bool cust;
+  MyLogin({Key? key, this.admin = false, this.cust = true}) : super(key: key);
 
   @override
   _MyLoginState createState() => _MyLoginState();
@@ -30,7 +33,7 @@ class _MyLoginState extends State<MyLogin> {
                       top: MediaQuery.of(context).size.height * 0.15,
                     ),
                     child: Text(
-                      'Log In/Sign Up',
+                      widget.admin == true ? 'Log In' : 'Log In/Sign Up',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: primary,
@@ -92,12 +95,25 @@ class _MyLoginState extends State<MyLogin> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => RootApp(),
-                                ),
-                              );
+                              if (widget.admin == true &&
+                                  widget.cust == false) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RootApp(),
+                                  ),
+                                );
+                              }
+                              if (widget.admin == false &&
+                                  widget.cust == true) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RootAppCust(),
+                                  ),
+                                );
+                              } else {}
+                              ;
                             },
                             child: Image(
                               width: MediaQuery.of(context).size.width * 0.6,
@@ -108,36 +124,44 @@ class _MyLoginState extends State<MyLogin> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10.0),
-                      Text(
-                        "Already Have account?",
-                        style: TextStyle(fontSize: 15),
-                      ),
-                      const SizedBox(height: 10.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => SignUp(),
-                                ),
-                              );
-                            },
-                            child: Text(
-                              "SignUp",
-                              style: TextStyle(
-                                color: primary,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      if (widget.admin == false)
+                        Column(
+                          children: [
+                            const SizedBox(height: 10.0),
+                            Text(
+                              "Already Have account?",
+                              style: TextStyle(fontSize: 15),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 30.0),
+                            const SizedBox(height: 10.0),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignUp(
+                                          admin: widget.admin,
+                                          cust: widget.cust,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    "SignUp",
+                                    style: TextStyle(
+                                      color: primary,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 30.0),
+                          ],
+                        ),
                     ],
                   ),
                 ),

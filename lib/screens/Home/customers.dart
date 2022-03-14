@@ -95,11 +95,147 @@ class _CustomersPageState extends State<CustomersPage> {
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image(
-                width: size.width * 0.15,
-                image: AssetImage('assets/images/Plus.png'),
+            child: InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) => SingleChildScrollView(
+                          child: AlertDialog(
+                            backgroundColor: primary,
+                            title: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Add Customer',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Icon(
+                                    Icons.close,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                            actions: [
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: primary)),
+                                  labelText: 'Name of the firm',
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  focusColor: primary,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: primary)),
+                                  labelText: 'Name of the contact person',
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  focusColor: primary,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: primary)),
+                                  labelText: 'Real estate of the customer',
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  focusColor: primary,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: primary)),
+                                  labelText: 'Telephone',
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  focusColor: primary,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10.0),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  floatingLabelBehavior:
+                                      FloatingLabelBehavior.never,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(25.0),
+                                      borderSide: BorderSide(color: primary)),
+                                  labelText: 'Email',
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  focusColor: primary,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20.0),
+                              Center(
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.3,
+                                  height: MediaQuery.of(context).size.height *
+                                      0.075,
+                                  color: Colors.white,
+                                  child: Center(
+                                    child: Text(
+                                      'Add Customer',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ));
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image(
+                  width: size.width * 0.15,
+                  image: AssetImage('assets/images/Plus.png'),
+                ),
               ),
             ),
           ),
