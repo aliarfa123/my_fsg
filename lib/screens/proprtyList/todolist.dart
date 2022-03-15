@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/proprtyList/addToDo.dart';
+import 'package:my_fsg/screens/proprtyList/propertydetial.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 class ToDoList extends StatefulWidget {
-  const ToDoList({Key? key}) : super(key: key);
+  var title;
+  ToDoList({Key? key, this.title}) : super(key: key);
 
   @override
   State<ToDoList> createState() => _ToDoListState();
@@ -13,6 +15,8 @@ class _ToDoListState extends State<ToDoList> {
   bool valuefirst = false;
   bool valuesec = false;
   bool valuethird = false;
+  bool valueFourth = false;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -20,6 +24,21 @@ class _ToDoListState extends State<ToDoList> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: primary,
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PropertyDetail(
+                            address: 'House # 12345, St # 88, Sec # 7....',
+                            image: 'assets/images/house3.png',
+                          )));
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          ),
           title: Text('Tasks To Do'),
           bottom: TabBar(indicatorColor: primary, labelColor: primary, tabs: [
             Tab(
@@ -125,6 +144,33 @@ class _ToDoListState extends State<ToDoList> {
                           ],
                         ),
                       ),
+                    if (valueFourth == false && widget.title != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valueFourth = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valueFourth,
+                              // onChanged: (bool value) {
+                              //   setState(() {
+                              //     this.valuefirst = value;
+                              //   });
+                              // },
+                            ),
+                            Text(
+                              widget.title,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
                 Align(
@@ -214,6 +260,28 @@ class _ToDoListState extends State<ToDoList> {
                             ),
                             Text(
                               'Task 3',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (valueFourth == true && widget.title != null)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valueFourth = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valueFourth,
+                            ),
+                            Text(
+                              widget.title,
                               style: TextStyle(fontSize: 20),
                             ),
                           ],

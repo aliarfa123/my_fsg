@@ -2,9 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:image_picker/image_picker.dart';
+import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddToDo extends StatefulWidget {
   const AddToDo({Key? key}) : super(key: key);
@@ -14,10 +16,10 @@ class AddToDo extends StatefulWidget {
 }
 
 class _AddToDoState extends State<AddToDo> {
+  String? title;
   DateTime selectedDate = DateTime.now();
-
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(  
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(2015, 8),
@@ -45,6 +47,7 @@ class _AddToDoState extends State<AddToDo> {
     final format = DateFormat("yyyy-MM-dd");
     return Scaffold(
       appBar: AppBar(
+        
         backgroundColor: primary,
         title: Text('Add To do List'),
       ),
@@ -56,6 +59,11 @@ class _AddToDoState extends State<AddToDo> {
               children: [
                 const SizedBox(height: 20.0),
                 TextFormField(
+                  onChanged: (value) async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    prefs.setString('title', value);
+                  },
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabledBorder: OutlineInputBorder(
@@ -160,20 +168,36 @@ class _AddToDoState extends State<AddToDo> {
                   ),
                 ),
                 const SizedBox(height: 20.0),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.075,
-                  width: MediaQuery.of(context).size.width * 0.25,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: primary,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Add',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                InkWell(
+                  onTap: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    //Return String
+                    title = prefs.getString('title');
+                    print(title);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ToDoList(title: title),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.075,
+                    width: MediaQuery.of(context).size.width * 0.25,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: primary,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Add',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

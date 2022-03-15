@@ -71,24 +71,38 @@ class _SelectionPageState extends State<SelectionPage> {
               child: FloatingActionButton(
                 backgroundColor: primary,
                 onPressed: () {
-                  // if (cust == true && admin == true ||
-                  //     cust == false && admin == false) {
-                  //   showDialog(
-                  //       context: context,
-                  //       builder: (_) => AlertDialog(
-                  //             backgroundColor: primary,
-                  //             title: Text('Please select one option'),
-                  //           ));
-                  // } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyLogin(
-                        admin: admin,
-                        cust: cust,
+                  if (admin == false && cust == false) {
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDialog(
+                        title: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  'Pick one option',
+                                ),
+                                GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  child: Icon(Icons.cancel),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyLogin(
+                          admin: admin,
+                          cust: cust,
+                        ),
+                      ),
+                    );
                 },
                 // },
                 child: Icon(

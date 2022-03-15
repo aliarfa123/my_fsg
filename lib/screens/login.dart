@@ -4,8 +4,6 @@ import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/bottomNavBar2.dart';
 import 'package:my_fsg/theme/colors.dart';
 
-import 'Home/realestate.dart';
-
 class MyLogin extends StatefulWidget {
   bool admin;
   bool cust;

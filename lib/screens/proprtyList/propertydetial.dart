@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_fsg/screens/Home/realestate.dart';
+import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/proprtyList/noteslist.dart';
 import 'package:my_fsg/screens/proprtyList/pdf.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
@@ -8,8 +10,11 @@ import 'package:my_fsg/theme/colors.dart';
 class PropertyDetail extends StatefulWidget {
   var image;
   var address;
-  PropertyDetail({Key? key, required this.image, required this.address})
-      : super(key: key);
+  PropertyDetail({
+    Key? key,
+    required this.image,
+    required this.address,
+  }) : super(key: key);
 
   @override
   State<PropertyDetail> createState() => _PropertyDetailState();
@@ -21,6 +26,20 @@ class _PropertyDetailState extends State<PropertyDetail> {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RootApp(),
+              ),
+            );
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+        ),
         title: Text('Property Detail'),
         backgroundColor: primary,
       ),
