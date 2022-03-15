@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 class NotesList extends StatefulWidget {
   const NotesList({Key? key}) : super(key: key);
@@ -11,12 +13,15 @@ class NotesList extends StatefulWidget {
 class _NotesListState extends State<NotesList> {
   @override
   Widget build(BuildContext context) {
+    TextEditingController a = TextEditingController();
+    TextEditingController b = TextEditingController();
     List notes = [
       'Note 1',
       'Note 2',
       'Note 3',
       'Note 4',
     ];
+    String title = '';
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
@@ -44,89 +49,118 @@ class _NotesListState extends State<NotesList> {
                 showDialog(
                     context: context,
                     builder: (_) => SingleChildScrollView(
-                          child: AlertDialog(
-                            backgroundColor: primary,
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Add Notes',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(
-                                    Icons.cancel,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            actions: [
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: BorderSide(color: primary)),
-                                  labelText: 'Title',
-                                  fillColor: Colors.grey.shade100,
-                                  filled: true,
-                                  focusColor: primary,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20.0),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  floatingLabelBehavior:
-                                      FloatingLabelBehavior.never,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(25.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                      borderSide: BorderSide(color: primary)),
-                                  labelText: 'Description',
-                                  fillColor: Colors.grey.shade100,
-                                  filled: true,
-                                  focusColor: primary,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 20.0),
-                              Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.075,
-                                width: MediaQuery.of(context).size.width * 0.25,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: primary,
+                                    MediaQuery.of(context).size.height * 0.2,
+                              ),
+                              AlertDialog(
+                                backgroundColor: Colors.white,
+                                title: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Add Notes',
+                                      style: TextStyle(
+                                        color: primary,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.cancel,
+                                          color: primary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    'Add',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
+                                actions: [
+                                  TextFormField(
+                                    controller: a,
+                                    initialValue: title,
+                                    onChanged: (title) => setState(() {}),
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.never,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                          borderSide:
+                                              BorderSide(color: primary)),
+                                      labelText: 'Title',
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      focusColor: primary,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                  const SizedBox(height: 20.0),
+                                  TextFormField(
+                                    controller: b,
+                                    decoration: InputDecoration(
+                                      floatingLabelBehavior:
+                                          FloatingLabelBehavior.never,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(25.0),
+                                          borderSide:
+                                              BorderSide(color: primary)),
+                                      labelText: 'Description',
+                                      fillColor: Colors.grey.shade100,
+                                      filled: true,
+                                      focusColor: primary,
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20.0),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.075,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.25,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: primary,
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          'Add',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -148,4 +182,23 @@ class _NotesListState extends State<NotesList> {
       ),
     );
   }
+}
+
+_read() async {
+  try {
+    final directory = await getApplicationDocumentsDirectory();
+    final file = File('${directory.path}/my_file.txt');
+    String text = await file.readAsString();
+    print(text);
+  } catch (e) {
+    print("Couldn't read file");
+  }
+}
+
+_save() async {
+  final directory = await getApplicationDocumentsDirectory();
+  final file = File('${directory.path}/my_file.txt');
+  final text = 'Hello World!';
+  await file.writeAsString(text);
+  print('saved');
 }

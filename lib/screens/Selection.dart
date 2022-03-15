@@ -36,7 +36,10 @@ class _SelectionPageState extends State<SelectionPage> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      admin = !admin;
+                      if (cust == true) {
+                        admin = false;
+                      } else
+                        admin = !admin;
                     });
                   },
                   child: Image(
@@ -47,7 +50,10 @@ class _SelectionPageState extends State<SelectionPage> {
                 ),
                 GestureDetector(
                   onTap: () => setState(() {
-                    cust = !cust;
+                    if (admin == true) {
+                      cust = false;
+                    } else
+                      cust = !cust;
                   }),
                   child: Image(
                     image: cust
@@ -65,26 +71,26 @@ class _SelectionPageState extends State<SelectionPage> {
               child: FloatingActionButton(
                 backgroundColor: primary,
                 onPressed: () {
-                  if (cust == true && admin == true ||
-                      cust == false && admin == false) {
-                    showDialog(
-                        context: context,
-                        builder: (_) => AlertDialog(
-                              backgroundColor: primary,
-                              title: Text('Please select one option'),
-                            ));
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MyLogin(
-                          admin: admin,
-                          cust: cust,
-                        ),
+                  // if (cust == true && admin == true ||
+                  //     cust == false && admin == false) {
+                  //   showDialog(
+                  //       context: context,
+                  //       builder: (_) => AlertDialog(
+                  //             backgroundColor: primary,
+                  //             title: Text('Please select one option'),
+                  //           ));
+                  // } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyLogin(
+                        admin: admin,
+                        cust: cust,
                       ),
-                    );
-                  }
+                    ),
+                  );
                 },
+                // },
                 child: Icon(
                   Icons.arrow_forward,
                 ),

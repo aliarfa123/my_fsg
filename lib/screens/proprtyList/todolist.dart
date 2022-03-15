@@ -13,9 +13,6 @@ class _ToDoListState extends State<ToDoList> {
   bool valuefirst = false;
   bool valuesec = false;
   bool valuethird = false;
-  bool valuefirst1 = true;
-  bool valuesec2 = true;
-  bool valuethird3 = true;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -47,84 +44,87 @@ class _ToDoListState extends State<ToDoList> {
               children: [
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (value) {
-                              setState(() {
-                                this.valuefirst = value!;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: primary,
-                            value: this.valuefirst,
-                            // onChanged: (bool value) {
-                            //   setState(() {
-                            //     this.valuefirst = value;
-                            //   });
-                            // },
-                          ),
-                          Text(
-                            'Task 1',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                    if (valuefirst == false)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valuefirst = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valuefirst,
+                              // onChanged: (bool value) {
+                              //   setState(() {
+                              //     this.valuefirst = value;
+                              //   });
+                              // },
+                            ),
+                            Text(
+                              'Task 1',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (value) {
-                              setState(() {
-                                this.valuesec = value!;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: primary,
-                            value: this.valuesec,
-                            // onChanged: (bool value) {
-                            //   setState(() {
-                            //     this.valuefirst = value;
-                            //   });
-                            // },
-                          ),
-                          Text(
-                            'Task 2',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                    if (valuesec == false)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valuesec = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valuesec,
+                              // onChanged: (bool value) {
+                              //   setState(() {
+                              //     this.valuefirst = value;
+                              //   });
+                              // },
+                            ),
+                            Text(
+                              'Task 2',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (value) {
-                              setState(() {
-                                this.valuethird = value!;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: primary,
-                            value: this.valuethird,
-                            // onChanged: (bool value) {
-                            //   setState(() {
-                            //     this.valuefirst = value;
-                            //   });
-                            // },
-                          ),
-                          Text(
-                            'Task 3',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                    if (valuethird == false)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valuethird = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valuethird,
+                              // onChanged: (bool value) {
+                              //   setState(() {
+                              //     this.valuefirst = value;
+                              //   });
+                              // },
+                            ),
+                            Text(
+                              'Task 3',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 Align(
@@ -152,70 +152,73 @@ class _ToDoListState extends State<ToDoList> {
               children: [
                 Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (value) {
-                              setState(() {
-                                this.valuefirst1 = value!;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: primary,
-                            value: this.valuefirst1,
-                          ),
-                          Text(
-                            'Task 1',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                    if (valuefirst == true)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valuefirst = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valuefirst,
+                            ),
+                            Text(
+                              'Task 1',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (value) {
-                              setState(() {
-                                this.valuesec2 = value!;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: primary,
-                            value: this.valuesec2,
-                            //
-                          ),
-                          Text(
-                            'Task 2',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                    if (valuesec == true)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valuesec = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valuesec,
+                              //
+                            ),
+                            Text(
+                              'Task 2',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Checkbox(
-                            onChanged: (value) {
-                              setState(() {
-                                this.valuethird3 = value!;
-                              });
-                            },
-                            checkColor: Colors.white,
-                            activeColor: primary,
-                            value: this.valuethird3,
-                          ),
-                          Text(
-                            'Task 3',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                    if (valuethird == true)
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Checkbox(
+                              onChanged: (value) {
+                                setState(() {
+                                  this.valuethird = value!;
+                                });
+                              },
+                              checkColor: Colors.white,
+                              activeColor: primary,
+                              value: this.valuethird,
+                            ),
+                            Text(
+                              'Task 3',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
                 Align(
