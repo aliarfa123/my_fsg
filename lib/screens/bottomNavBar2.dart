@@ -46,7 +46,11 @@ class _RootAppCustState extends State<RootAppCust> {
       'Settings',
     ];
     return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10),
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+        bottom: 15,
+      ),
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.14,
       decoration: BoxDecoration(
