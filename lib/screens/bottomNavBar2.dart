@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_fsg/screens/Home/customers.dart';
 import 'package:my_fsg/screens/Home/myProfile.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import '../theme/colors.dart';
@@ -25,7 +24,6 @@ class _RootAppCustState extends State<RootAppCust> {
   Widget getBody() {
     List<Widget> pages = [
       const HomePage(),
-      const CustomersPage(),
       const MyProfile(),
     ];
     return IndexedStack(
@@ -37,12 +35,10 @@ class _RootAppCustState extends State<RootAppCust> {
   Widget getFooter() {
     List bottomItems = [
       'assets/images/real_estate.png',
-      'assets/images/customer_icon.png',
       'assets/images/settings.png',
     ];
     List textItems = [
       'Real Estate',
-      'Customers',
       'Settings',
     ];
     return Container(
@@ -69,7 +65,7 @@ class _RootAppCustState extends State<RootAppCust> {
                   selectedTab(index);
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.22,
+                  width: MediaQuery.of(context).size.width * 0.24,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border.all(color: Colors.grey),
@@ -87,7 +83,7 @@ class _RootAppCustState extends State<RootAppCust> {
                     children: [
                       Image.asset(
                         bottomItems[index],
-                        width: MediaQuery.of(context).size.width * 0.13,
+                        width: MediaQuery.of(context).size.width * 0.14,
                         color: pageIndex == index
                             ? primary
                             : primary.withOpacity(0.6),

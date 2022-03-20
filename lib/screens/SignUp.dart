@@ -108,45 +108,7 @@ class _SignUpState extends State<SignUp> {
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide(color: primary)),
-                      labelText: 'Contact',
-                      fillColor: Colors.grey.shade100,
-                      filled: true,
-                      focusColor: primary,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: primary)),
-                      labelText: 'IBAN',
-                      fillColor: Colors.grey.shade100,
-                      filled: true,
-                      focusColor: primary,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(color: primary)),
-                      labelText: 'Address',
+                      labelText: 'Tel',
                       fillColor: Colors.grey.shade100,
                       filled: true,
                       focusColor: primary,
@@ -252,25 +214,12 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (widget.admin == true &&
-                                    widget.cust == false) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RootApp(),
-                                    ),
-                                  );
-                                }
-                                if (widget.admin == false &&
-                                    widget.cust == true) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => RootAppCust(),
-                                    ),
-                                  );
-                                } else {}
-                                ;
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyLogin(),
+                                  ),
+                                );
                               },
                               child: Image(
                                 width: MediaQuery.of(context).size.width * 0.6,

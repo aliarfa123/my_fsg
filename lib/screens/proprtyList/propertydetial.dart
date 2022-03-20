@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/bottomNavBar.dart';
+import 'package:my_fsg/screens/proprtyList/ElectricMeter.dart';
 import 'package:my_fsg/screens/proprtyList/noteslist.dart';
 import 'package:my_fsg/screens/proprtyList/pdf.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
@@ -43,151 +44,225 @@ class _PropertyDetailState extends State<PropertyDetail> {
         title: Text('Property Detail'),
         backgroundColor: primary,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: size.height * 0.25,
-                width: size.width * 0.5,
-                decoration: BoxDecoration(
-                  // color: primary,
-                  image: DecorationImage(
-                      image: AssetImage(widget.image), fit: BoxFit.fill),
-                ),
-              ),
-              Container(
-                alignment: Alignment.center,
-                height: size.height * 0.25,
-                width: size.width * 0.45,
-                child: Wrap(
-                  children: [
-                    Text(widget.address),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ToDoList(),
-                ),
-              );
-            },
-            child: Container(
-              height: size.height * 0.08,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/todolist.png',
-                ),
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height * 0.05,
             ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NotesList(),
-                ),
-              );
-            },
-            child: Container(
-              height: size.height * 0.08,
-              child: Image(
-                image: AssetImage(
-                  'assets/images/notes_list.png',
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: size.height * 0.05,
-          ),
-          Container(
-            padding: EdgeInsets.all(16.0),
-            alignment: Alignment.centerLeft,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  'Contact Details:',
-                  style: TextStyle(
-                    fontSize: 24,
+                Container(
+                  height: size.height * 0.25,
+                  width: size.width * 0.55,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(widget.image),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  'Name:       ________________',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Contact:    ________________',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  'Email:        ________________',
-                  style: TextStyle(
-                    fontSize: 18,
+                Container(
+                  alignment: Alignment.center,
+                  height: size.height * 0.25,
+                  width: size.width * 0.42,
+                  child: Wrap(
+                    children: [
+                      Text(
+                        widget.address,
+                        style: TextStyle(
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: size.height * 0.01,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => GeneratePDF(
-                    address2: widget.address,
-                    image2: widget.image,
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ToDoList(),
                   ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-              );
-            },
-            child: Container(
-              width: size.width * 0.4,
-              height: size.height * 0.05,
-              decoration: BoxDecoration(
-                color: primary,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Center(
-                child: Text(
-                  'Generate PDF',
-                  style: TextStyle(color: Colors.white),
+                height: size.height * 0.063,
+                width: size.width * 0.6,
+                child: Center(
+                  child: Text(
+                    'To Do List',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotesList(),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                height: size.height * 0.063,
+                width: size.width * 0.6,
+                child: Center(
+                  child: Text(
+                    'Notes List',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ElectricMeter(),
+                  ),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                height: size.height * 0.063,
+                width: size.width * 0.6,
+                child: Center(
+                  child: Text(
+                    'Electricity Meter',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.02,
+            ),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Contact Details:',
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'Name:       ________________',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Contact:    ________________',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Email:        ________________',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Tel:            ________________',
+                    style: TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GeneratePDF(
+                      address2: widget.address,
+                      image2: widget.image,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                width: size.width * 0.4,
+                height: size.height * 0.05,
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
+                    'Document Storage',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
