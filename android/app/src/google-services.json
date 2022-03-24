@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "95898600270",
+    "project_id": "my-fsg",
+    "storage_bucket": "my-fsg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:95898600270:android:23127ae7d8001b6e61141f",
+        "android_client_info": {
+          "package_name": "com.example.my_fsg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "95898600270-ml0em29pgerfo0q3udgk0biomptna84l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDos3e3j4I4OgNh1cmKyx6-ypo1OCfrVnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "95898600270-ml0em29pgerfo0q3udgk0biomptna84l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "95898600270-l4hqnb4jdc89at1ikfsa86t31174m2d1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.myFsg"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
