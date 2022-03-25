@@ -1,12 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:my_fsg/screens/Home/realestate.dart';
-import 'package:my_fsg/screens/Selection.dart';
 import 'package:my_fsg/screens/bottomNavBar.dart';
-import 'package:my_fsg/screens/login.dart';
-import 'package:my_fsg/screens/splash.dart';
 import 'package:my_fsg/theme/colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: LogInScreen(),
+      home: RootApp(),
       debugShowCheckedModeBanner: false,
     );
   }

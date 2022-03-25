@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
 import 'dart:io';
@@ -11,12 +12,39 @@ class NotesList extends StatefulWidget {
 }
 
 class _NotesListState extends State<NotesList> {
+  var data1;
+  setData(String title, String desc) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref('notes/' + title);
+
+    await ref.set({
+      "description": desc,
+    });
+  }
+
+  void readData() async {
+    DatabaseReference databaseref =
+        FirebaseDatabase.instance.ref('notes/' + title!);
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      print(data);
+      setState(() {
+        data1 = data;
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    readData();
+  }
+
   String? title = '';
-  String? _title;
   @override
   Widget build(BuildContext context) {
-    TextEditingController a = TextEditingController();
-    TextEditingController b = TextEditingController();
+    TextEditingController titleText = TextEditingController();
+    TextEditingController desc = TextEditingController();
     List notes = [
       'Note 1',
       'Note 2',
@@ -30,45 +58,33 @@ class _NotesListState extends State<NotesList> {
       ),
       body: Stack(
         children: [
-          // ListView.builder(
-          //   itemCount: notes.length,
-          //   itemBuilder: ((context, index) {
-          // return Container(
-          //   width: MediaQuery.of(context).size.width * 0.8,
-          //   padding: const EdgeInsets.all(16.0),
-          //   child: Text(
-          //     notes[index],
-          //     style: TextStyle(fontSize: 20, color: Colors.black),
-          //   ),
-          // );
-          //   }),
-          // ),
           Column(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  notes[0],
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  notes[1],
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.8,
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  notes[2],
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-              ),
+              Text(data1.toString()),
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.8,
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: Text(
+              //     notes[0],
+              //     style: TextStyle(fontSize: 20, color: Colors.black),
+              //   ),
+              // ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.8,
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: Text(
+              //     notes[1],
+              //     style: TextStyle(fontSize: 20, color: Colors.black),
+              //   ),
+              // ),
+              // Container(
+              //   width: MediaQuery.of(context).size.width * 0.8,
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: Text(
+              //     notes[2],
+              //     style: TextStyle(fontSize: 20, color: Colors.black),
+              //   ),
+              // ),
               if (title != null)
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -129,7 +145,7 @@ class _NotesListState extends State<NotesList> {
                                     //         await SharedPreferences.getInstance();
                                     //     prefs.setString('title', value);
                                     //   },
-                                    controller: a,
+                                    controller: titleText,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
@@ -154,7 +170,7 @@ class _NotesListState extends State<NotesList> {
                                   ),
                                   const SizedBox(height: 20.0),
                                   TextFormField(
-                                    controller: b,
+                                    controller: desc,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior:
                                           FloatingLabelBehavior.never,
@@ -189,6 +205,7 @@ class _NotesListState extends State<NotesList> {
                                       //     _title = title;
                                       //     print(_title);
                                       //   });
+                                      setData(titleText.text, desc.text);
                                       Navigator.pop(context);
                                     },
                                     child: Padding(
