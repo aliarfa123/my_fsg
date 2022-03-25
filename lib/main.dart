@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: const SplashScreen(),
+      home: LogInScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

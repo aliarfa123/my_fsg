@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class NotesList extends StatefulWidget {
   const NotesList({Key? key}) : super(key: key);
@@ -125,11 +124,11 @@ class _NotesListState extends State<NotesList> {
                                 ),
                                 actions: [
                                   TextFormField(
-                                    onChanged: (value) async {
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      prefs.setString('title', value);
-                                    },
+                                    //   onChanged: (value) async {
+                                    //     SharedPreferences prefs =
+                                    //         await SharedPreferences.getInstance();
+                                    //     prefs.setString('title', value);
+                                    //   },
                                     controller: a,
                                     decoration: InputDecoration(
                                       floatingLabelBehavior:
@@ -180,16 +179,16 @@ class _NotesListState extends State<NotesList> {
                                   ),
                                   const SizedBox(height: 20.0),
                                   InkWell(
-                                    onTap: () async {
-                                      SharedPreferences prefs =
-                                          await SharedPreferences.getInstance();
-                                      //Return String
-                                      title = prefs.getString('title');
-                                      print(title);
-                                      setState(() {
-                                        _title = title;
-                                        print(_title);
-                                      });
+                                    onTap: () {
+                                      //   SharedPreferences prefs =
+                                      //       await SharedPreferences.getInstance();
+                                      //   //Return String
+                                      //   title = prefs.getString('title');
+                                      //   print(title);
+                                      //   setState(() {
+                                      //     _title = title;
+                                      //     print(_title);
+                                      //   });
                                       Navigator.pop(context);
                                     },
                                     child: Padding(

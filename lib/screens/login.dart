@@ -1,9 +1,44 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/SignUp.dart';
 import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/bottomNavBar2.dart';
 import 'package:my_fsg/theme/colors.dart';
 
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LogInScreen> createState() => _LogInScreenState();
+}
+
+class _LogInScreenState extends State<LogInScreen> {
+  Future<FirebaseApp> _firebaseInit() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: FutureBuilder(
+        future: _firebaseInit(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return MyLogin();
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
 class MyLogin extends StatefulWidget {
   bool admin;
   bool cust;
@@ -14,6 +49,9 @@ class MyLogin extends StatefulWidget {
 }
 
 class _MyLoginState extends State<MyLogin> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -51,6 +89,7 @@ class _MyLoginState extends State<MyLogin> {
                   child: Column(
                     children: [
                       TextFormField(
+                        controller: emailController,
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           enabledBorder: OutlineInputBorder(
@@ -70,6 +109,7 @@ class _MyLoginState extends State<MyLogin> {
                       ),
                       const SizedBox(height: 30.0),
                       TextFormField(
+                        controller: passwordController,
                         decoration: InputDecoration(
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           enabledBorder: OutlineInputBorder(
@@ -92,26 +132,45 @@ class _MyLoginState extends State<MyLogin> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              if (widget.admin == true &&
-                                  widget.cust == false) {
+                            onTap: () async {
+                              User? user = await logInWithEmailPass(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  context: context);
+
+                              print(
+                                  '_______________________' + user.toString());
+                              if (user != null) {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => RootApp(),
                                   ),
                                 );
+                              } else {
+                                print('null haiii');
                               }
-                              if (widget.admin == false &&
-                                  widget.cust == true) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RootAppCust(),
-                                  ),
-                                );
-                              } else {}
-                              ;
+                              // logIn();
+
+                              // if (widget.admin == true &&
+                              //     widget.cust == false) {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder: (context) => RootApp(),
+                              //   ),
+                              // );
+                              // }
+                              // if (widget.admin == false &&
+                              //     widget.cust == true) {
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => RootAppCust(),
+                              //     ),
+                              //   );
+                              // } else {}
+                              // ;
                             },
                             child: Image(
                               width: MediaQuery.of(context).size.width * 0.6,
@@ -184,5 +243,28 @@ class _MyLoginState extends State<MyLogin> {
         ),
       ),
     );
+  }
+
+  static Future<User?> logInWithEmailPass(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('user not found');
+      }
+    }
+    return user;
+  }
+
+  Future logIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim());
   }
 }

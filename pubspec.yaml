@@ -30,13 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  image_picker: ^0.6.7+4
-  datetime_picker_formfield: ^2.0.0
-  shared_preferences: ^2.0.13
-  path_provider: ^2.0.9
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.6.2+1
-  firebase: ^8.0.0
+  firebase_core: ^1.13.1
+  firebase_auth: ^3.3.11
 
 dev_dependencies:
   flutter_native_splash: ^2.1.0

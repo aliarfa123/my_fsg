@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/login.dart';
-import 'package:image_picker/image_picker.dart';
+// import 'package:image_picker/image_picker.dart';
 
 import '../theme/colors.dart';
 import 'bottomNavBar.dart';
@@ -21,13 +21,13 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   var _image;
 
-  Future getImagefromGallery() async {
-    File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  // Future getImagefromGallery() async {
+  //   File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = File(image.path);
-    });
-  }
+  //   setState(() {
+  //     _image = File(image.path);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +188,7 @@ class _SignUpState extends State<SignUp> {
                           alignment: Alignment.bottomRight,
                           child: InkWell(
                             onTap: () {
-                              getImagefromGallery();
+                              // getImagefromGallery();
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),

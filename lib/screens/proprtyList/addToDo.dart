@@ -1,12 +1,7 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:image_picker/image_picker.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
-import 'package:intl/intl.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class AddToDo extends StatefulWidget {
   const AddToDo({Key? key}) : super(key: key);
@@ -33,21 +28,20 @@ class _AddToDoState extends State<AddToDo> {
 
   var _image;
 
-  Future getImagefromGallery() async {
-    // ignore: deprecated_member_use
-    File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  // Future getImagefromGallery() async {
+  //   // ignore: deprecated_member_use
+  //   File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = File(image.path);
-    });
-  }
+  //   setState(() {
+  //     _image = File(image.path);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final format = DateFormat("yyyy-MM-dd");
+    // final format = DateFormat("yyyy-MM-dd");
     return Scaffold(
       appBar: AppBar(
-        
         backgroundColor: primary,
         title: Text('Add To do List'),
       ),
@@ -59,11 +53,11 @@ class _AddToDoState extends State<AddToDo> {
               children: [
                 const SizedBox(height: 20.0),
                 TextFormField(
-                  onChanged: (value) async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    prefs.setString('title', value);
-                  },
+                  // onChanged: (value) async {
+                  //   SharedPreferences prefs =
+                  //       await SharedPreferences.getInstance();
+                  //   prefs.setString('title', value);
+                  // },
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabledBorder: OutlineInputBorder(
@@ -156,7 +150,7 @@ class _AddToDoState extends State<AddToDo> {
                         alignment: Alignment.bottomRight,
                         child: InkWell(
                           onTap: () {
-                            getImagefromGallery();
+                            // getImagefromGallery();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -170,11 +164,11 @@ class _AddToDoState extends State<AddToDo> {
                 const SizedBox(height: 20.0),
                 InkWell(
                   onTap: () async {
-                    SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    //Return String
-                    title = prefs.getString('title');
-                    print(title);
+                    // SharedPreferences prefs =
+                    //     await SharedPreferences.getInstance();
+                    // //Return String
+                    // title = prefs.getString('title');
+                    // print(title);
 
                     Navigator.push(
                       context,
