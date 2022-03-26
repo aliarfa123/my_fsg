@@ -132,45 +132,21 @@ class _MyLoginState extends State<MyLogin> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
-                            onTap: () async {
-                              User? user = await logInWithEmailPass(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  context: context);
-
-                              print(
-                                  '_______________________' + user.toString());
-                              if (user != null) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RootApp(),
-                                  ),
-                                );
-                              } else {
-                                print('null haiii');
-                              }
-                              // logIn();
-
-                              // if (widget.admin == true &&
-                              //     widget.cust == false) {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => RootApp(),
-                              //   ),
-                              // );
-                              // }
-                              // if (widget.admin == false &&
-                              //     widget.cust == true) {
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => RootAppCust(),
-                              //     ),
-                              //   );
-                              // } else {}
-                              // ;
+                            onTap: () {
+                              FirebaseAuth.instance
+                                  .signInWithEmailAndPassword(
+                                      email: emailController.text,
+                                      password: passwordController.text)
+                                  .then(
+                                    (value) => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => RootApp(),
+                                      ),
+                                    ),
+                                  )
+                                  .onError((error, stackTrace) =>
+                                      print('Error ${error.toString()}'));
                             },
                             child: Image(
                               width: MediaQuery.of(context).size.width * 0.6,

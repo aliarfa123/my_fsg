@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/login.dart';
-// import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../theme/colors.dart';
 import 'bottomNavBar.dart';
@@ -19,6 +20,16 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  final ImagePicker _picker = ImagePicker();
+  _getFromGallery() async {
+    // ignore: deprecated_member_use
+    PickedFile? image = await _picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = File(image!.path);
+    });
+  }
+
   var _image;
 
   // Future getImagefromGallery() async {
@@ -31,6 +42,8 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -81,6 +94,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    controller: emailController,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       enabledBorder: OutlineInputBorder(
@@ -119,6 +133,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    controller: passwordController,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       enabledBorder: OutlineInputBorder(
@@ -188,6 +203,7 @@ class _SignUpState extends State<SignUp> {
                           alignment: Alignment.bottomRight,
                           child: InkWell(
                             onTap: () {
+                              _getFromGallery();
                               // getImagefromGallery();
                             },
                             child: Padding(
@@ -214,12 +230,18 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MyLogin(),
-                                  ),
-                                );
+                                FirebaseAuth.instance
+                                    .createUserWithEmailAndPassword(
+                                        email: emailController.text,
+                                        password: passwordController.text)
+                                    .then(
+                                      (value) => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MyLogin(),
+                                        ),
+                                      ),
+                                    );
                               },
                               child: Image(
                                 width: MediaQuery.of(context).size.width * 0.6,

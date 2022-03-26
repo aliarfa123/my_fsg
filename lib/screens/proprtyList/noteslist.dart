@@ -21,22 +21,22 @@ class _NotesListState extends State<NotesList> {
     });
   }
 
-  void readData() async {
+  readData() async {
     DatabaseReference databaseref =
-        FirebaseDatabase.instance.ref('notes/' + title!);
+        FirebaseDatabase.instance.ref('notes/$title/');
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
       print(data);
       setState(() {
         data1 = data;
       });
+      return data1;
     });
   }
 
   @override
   void initState() {
     super.initState();
-
     readData();
   }
 
@@ -45,12 +45,6 @@ class _NotesListState extends State<NotesList> {
   Widget build(BuildContext context) {
     TextEditingController titleText = TextEditingController();
     TextEditingController desc = TextEditingController();
-    List notes = [
-      'Note 1',
-      'Note 2',
-      'Note 3',
-      'Note 4',
-    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primary,
@@ -61,6 +55,26 @@ class _NotesListState extends State<NotesList> {
           Column(
             children: [
               Text(data1.toString()),
+              // Expanded(
+              //   child: FutureBuilder(
+              //     // future: readData(),
+              //     builder: ((context, snapshot) {
+              //       if (snapshot.data != null) {
+              //         return ListView.builder(
+              //           itemCount: 1,
+              //           itemBuilder: ((context, index) => ListTile(
+              //                 title: Text(
+              //                   snapshot.data.toString(),
+              //                 ),
+              //               )),
+              //         );
+              //       } else {
+              //         return CircularProgressIndicator();
+              //       }
+              //     }),
+              //   ),
+              // ),
+              // Text(data1.toString()),
               // Container(
               //   width: MediaQuery.of(context).size.width * 0.8,
               //   padding: const EdgeInsets.all(16.0),
@@ -85,15 +99,15 @@ class _NotesListState extends State<NotesList> {
               //     style: TextStyle(fontSize: 20, color: Colors.black),
               //   ),
               // ),
-              if (title != null)
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    title!,
-                    style: TextStyle(fontSize: 20, color: Colors.black),
-                  ),
-                ),
+              // if (title != null)
+              //   Container(
+              //     width: MediaQuery.of(context).size.width * 0.8,
+              //     padding: const EdgeInsets.all(16.0),
+              //     child: Text(
+              //       title!,
+              //       style: TextStyle(fontSize: 20, color: Colors.black),
+              //     ),
+              //   ),
             ],
           ),
           Align(
