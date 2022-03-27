@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: AddToDo(),
+      home: RootApp(),
       debugShowCheckedModeBanner: false,
     );
   }
