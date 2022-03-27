@@ -5,8 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/login.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
-
+import 'package:path/path.dart';
 import '../theme/colors.dart';
 import 'bottomNavBar.dart';
 import 'bottomNavBar2.dart';
@@ -21,6 +22,8 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -28,6 +31,16 @@ class _SignUpState extends State<SignUp> {
   TextEditingController confirmPass = TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
+
+  putImage(String email) async {
+    if (_image == null) return;
+    final destination = 'Sign Up/' + email.replaceAll('.com', '');
+    final ref = firebase_storage.FirebaseStorage.instance
+        .ref(destination)
+        .child('Logo');
+    await ref.putFile(_image!);
+  }
+
   _getFromGallery() async {
     // ignore: deprecated_member_use
     PickedFile? image = await _picker.getImage(source: ImageSource.gallery);
@@ -51,19 +64,6 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  createUser(String email, String pass) async {
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: pass)
-        .then(
-          (value) => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyLogin(),
-            ),
-          ),
-        );
-  }
-
   var _image;
 
   // Future getImagefromGallery() async {
@@ -76,6 +76,19 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    createUser(String email, String pass) async {
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: pass)
+          .then(
+            (value) => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MyLogin(),
+              ),
+            ),
+          );
+    }
+
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -266,58 +279,17 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                putImage(emailController.text);
                                 // if (emailController.text.contains('@') &&
                                 //     nameController.text.isNotEmpty &&
                                 //     passwordController.text ==
                                 //         confirmPass.text &&
                                 //     passwordController.text.length > 6 &&
                                 //     telController.text.isNotEmpty) {
-                                setData(emailController.text,
-                                    telController.text, nameController.text);
-                                createUser(emailController.text,
-                                    passwordController.text);
-                                // FirebaseAuth.instance
-                                //     .createUserWithEmailAndPassword(
-                                //         email: emailController.text,
-                                //         password: passwordController.text)
-                                //     .then(
-                                //       (value) => Navigator.push(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) => MyLogin(),
-                                //         ),
-                                //       ),
-                                //     );
-                                // } else {
-                                //   showDialog(
-                                //     context: context,
-                                //     builder: (BuildContext context) {
-                                //       return AlertDialog(
-                                //         actions: [
-                                //           IconButton(
-                                //             onPressed: () {
-                                //               Navigator.pop(context);
-                                //             },
-                                //             icon: Icon(
-                                //               Icons.close,
-                                //               color: primary,
-                                //             ),
-                                //           ),
-                                //           Padding(
-                                //             padding: const EdgeInsets.only(
-                                //                 bottom: 8.0),
-                                //             child: Text(
-                                //               'Please fill the form correctly',
-                                //               style: TextStyle(
-                                //                   fontSize: 20,
-                                //                   fontWeight: FontWeight.bold),
-                                //             ),
-                                //           ),
-                                //         ],
-                                //       );
-                                //     },
-                                //   );
-                                // }
+                                // setData(emailController.text,
+                                //     telController.text, nameController.text);
+                                // createUser(emailController.text,
+                                //     passwordController.text);
                               },
                               child: Image(
                                 width: MediaQuery.of(context).size.width * 0.6,

@@ -100,7 +100,7 @@ class _MyProfileState extends State<MyProfile> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              tel,
+              tel ,
               style: TextStyle(fontSize: 20, color: Colors.grey),
             ),
           ),

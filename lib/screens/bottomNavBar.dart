@@ -5,7 +5,8 @@ import 'package:my_fsg/screens/Home/realestate.dart';
 import '../theme/colors.dart';
 
 class RootApp extends StatefulWidget {
-  const RootApp({Key? key}) : super(key: key);
+  var email;
+  RootApp({Key? key, this.email}) : super(key: key);
 
   @override
   _RootAppState createState() => _RootAppState();
@@ -33,7 +34,9 @@ class _RootAppState extends State<RootApp> {
       ),
       const HomePage(),
       const CustomersPage(),
-      MyProfile(),
+      MyProfile(
+        email: widget.email,
+      ),
     ];
     return IndexedStack(
       index: pageIndex,
