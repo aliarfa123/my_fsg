@@ -279,17 +279,50 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                putImage(emailController.text);
-                                // if (emailController.text.contains('@') &&
-                                //     nameController.text.isNotEmpty &&
-                                //     passwordController.text ==
-                                //         confirmPass.text &&
-                                //     passwordController.text.length > 6 &&
-                                //     telController.text.isNotEmpty) {
-                                // setData(emailController.text,
-                                //     telController.text, nameController.text);
-                                // createUser(emailController.text,
-                                //     passwordController.text);
+                                if (emailController.text.contains('@') &&
+                                    nameController.text.isNotEmpty &&
+                                    passwordController.text ==
+                                        confirmPass.text &&
+                                    passwordController.text.length > 6 &&
+                                    telController.text.isNotEmpty) {
+                                  putImage(emailController.text);
+                                  setData(emailController.text,
+                                      telController.text, nameController.text);
+                                  createUser(emailController.text,
+                                      passwordController.text);
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        actions: [
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: Icon(
+                                              Icons.close,
+                                              color: primary,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: Center(
+                                              child: Text(
+                                                'Please fill the form correctly',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Image(
                                 width: MediaQuery.of(context).size.width * 0.6,

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: SignUp(),
+      home: MyLogin(),
       debugShowCheckedModeBanner: false,
     );
   }

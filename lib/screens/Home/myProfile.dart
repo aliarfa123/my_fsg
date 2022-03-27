@@ -1,4 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
 
@@ -14,6 +15,18 @@ class _MyProfileState extends State<MyProfile> {
   var email;
   var tel;
   var name;
+  var _url;
+  getImage() async {
+    final ref = FirebaseStorage.instance
+        .ref('Sign Up/' + widget.email.toString().replaceAll('.com', ''))
+        .child('Logo');
+    var url = await ref.getDownloadURL();
+    print(url);
+    setState(() {
+      _url = url;
+    });
+  }
+
   readData() async {
     DatabaseReference databaseref = FirebaseDatabase.instance
         .ref(widget.email.toString().replaceAll('.com', '') + '/email');
@@ -57,15 +70,17 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
-    // TODO: implement initState
     readData();
     readName();
     readTel();
+    getImage();
   }
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -75,13 +90,32 @@ class _MyProfileState extends State<MyProfile> {
         ),
       ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Container(
+            decoration: BoxDecoration(
+              color: primary,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20)),
+            ),
+            height: size.height * 0.3,
+            child: Center(
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                radius: size.height * 0.07,
+                child: Image(
+                  image: NetworkImage(_url),
+                  height: size.height * 0.1,
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
               name,
-              style: TextStyle(fontSize: 20, color: Colors.grey),
+              style: TextStyle(fontSize: 25, color: Colors.grey),
             ),
           ),
           SizedBox(
@@ -90,18 +124,8 @@ class _MyProfileState extends State<MyProfile> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'Logo',
-              style: TextStyle(fontSize: 20, color: Colors.grey),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              tel ,
-              style: TextStyle(fontSize: 20, color: Colors.grey),
+              tel,
+              style: TextStyle(fontSize: 25, color: Colors.grey),
             ),
           ),
           SizedBox(
@@ -111,7 +135,7 @@ class _MyProfileState extends State<MyProfile> {
             padding: const EdgeInsets.all(10.0),
             child: Text(
               widget.email,
-              style: TextStyle(fontSize: 20, color: Colors.grey),
+              style: TextStyle(fontSize: 25, color: Colors.grey),
             ),
           ),
         ],
