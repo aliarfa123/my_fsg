@@ -1,14 +1,69 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 class MyProfile extends StatefulWidget {
-  const MyProfile({Key? key}) : super(key: key);
+  var email;
+  MyProfile({Key? key, this.email}) : super(key: key);
 
   @override
   State<MyProfile> createState() => _MyProfileState();
 }
 
 class _MyProfileState extends State<MyProfile> {
+  var email;
+  var tel;
+  var name;
+  readData() async {
+    DatabaseReference databaseref = FirebaseDatabase.instance
+        .ref(widget.email.toString().replaceAll('.com', '') + '/email');
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      print(data);
+      setState(() {
+        email = data;
+      });
+      print(email);
+      return email;
+    });
+  }
+
+  readName() async {
+    DatabaseReference databaseref = FirebaseDatabase.instance
+        .ref(widget.email.toString().replaceAll('.com', '') + '/name');
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      print(data);
+      setState(() {
+        name = data;
+      });
+      print(name);
+      return name;
+    });
+  }
+
+  readTel() async {
+    DatabaseReference databaseref = FirebaseDatabase.instance
+        .ref(widget.email.toString().replaceAll('.com', '') + '/telephone');
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      print(data);
+      setState(() {
+        tel = data;
+      });
+      print(tel);
+      return tel;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    readData();
+    readName();
+    readTel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +80,7 @@ class _MyProfileState extends State<MyProfile> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'My Firm Name',
+              name,
               style: TextStyle(fontSize: 20, color: Colors.grey),
             ),
           ),
@@ -45,7 +100,7 @@ class _MyProfileState extends State<MyProfile> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'My Address',
+              tel,
               style: TextStyle(fontSize: 20, color: Colors.grey),
             ),
           ),
@@ -55,27 +110,7 @@ class _MyProfileState extends State<MyProfile> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
-              'My IBAN',
-              style: TextStyle(fontSize: 20, color: Colors.grey),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Tel',
-              style: TextStyle(fontSize: 20, color: Colors.grey),
-            ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.01,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Text(
-              'Email',
+              widget.email,
               style: TextStyle(fontSize: 20, color: Colors.grey),
             ),
           ),

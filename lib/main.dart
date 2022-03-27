@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/SignUp.dart';
 import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/login.dart';

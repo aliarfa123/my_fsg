@@ -153,7 +153,9 @@ class _MyLoginState extends State<MyLogin> {
                                       (value) => Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => RootAppCust(),
+                                          builder: (context) => RootAppCust(
+                                            email: emailController.text,
+                                          ),
                                         ),
                                       ),
                                     )

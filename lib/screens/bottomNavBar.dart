@@ -33,7 +33,7 @@ class _RootAppState extends State<RootApp> {
       ),
       const HomePage(),
       const CustomersPage(),
-      const MyProfile(),
+      MyProfile(),
     ];
     return IndexedStack(
       index: pageIndex,

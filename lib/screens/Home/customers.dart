@@ -103,6 +103,10 @@ class _CustomersPageState extends State<CustomersPage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.12,
+                              ),
                               AlertDialog(
                                 backgroundColor: Colors.white,
                                 title: Row(

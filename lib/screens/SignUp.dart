@@ -42,12 +42,26 @@ class _SignUpState extends State<SignUp> {
     dynamic tel,
     String name,
   ) async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref(email);
-
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref(email.replaceAll('.com', ''));
     await ref.set({
+      'email': email,
       "telephone": tel,
       "name": name,
     });
+  }
+
+  createUser(String email, String pass) async {
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: pass)
+        .then(
+          (value) => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MyLogin(),
+            ),
+          ),
+        );
   }
 
   var _image;
@@ -252,56 +266,58 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (emailController.text.contains('@') &&
-                                    nameController.text.isNotEmpty &&
-                                    passwordController.text ==
-                                        confirmPass.text &&
-                                    passwordController.text.length > 6 &&
-                                    telController.text.isNotEmpty) {
-                                  FirebaseAuth.instance
-                                      .createUserWithEmailAndPassword(
-                                          email: emailController.text,
-                                          password: passwordController.text)
-                                      .then(
-                                        (value) => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MyLogin(),
-                                          ),
-                                        ),
-                                      );
-                                  setData(emailController.text,
-                                      telController.text, nameController.text);
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        actions: [
-                                          IconButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            icon: Icon(
-                                              Icons.close,
-                                              color: primary,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8.0),
-                                            child: Text(
-                                              'Please fill the form correctly',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                                }
+                                // if (emailController.text.contains('@') &&
+                                //     nameController.text.isNotEmpty &&
+                                //     passwordController.text ==
+                                //         confirmPass.text &&
+                                //     passwordController.text.length > 6 &&
+                                //     telController.text.isNotEmpty) {
+                                setData(emailController.text,
+                                    telController.text, nameController.text);
+                                createUser(emailController.text,
+                                    passwordController.text);
+                                // FirebaseAuth.instance
+                                //     .createUserWithEmailAndPassword(
+                                //         email: emailController.text,
+                                //         password: passwordController.text)
+                                //     .then(
+                                //       (value) => Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //           builder: (context) => MyLogin(),
+                                //         ),
+                                //       ),
+                                //     );
+                                // } else {
+                                //   showDialog(
+                                //     context: context,
+                                //     builder: (BuildContext context) {
+                                //       return AlertDialog(
+                                //         actions: [
+                                //           IconButton(
+                                //             onPressed: () {
+                                //               Navigator.pop(context);
+                                //             },
+                                //             icon: Icon(
+                                //               Icons.close,
+                                //               color: primary,
+                                //             ),
+                                //           ),
+                                //           Padding(
+                                //             padding: const EdgeInsets.only(
+                                //                 bottom: 8.0),
+                                //             child: Text(
+                                //               'Please fill the form correctly',
+                                //               style: TextStyle(
+                                //                   fontSize: 20,
+                                //                   fontWeight: FontWeight.bold),
+                                //             ),
+                                //           ),
+                                //         ],
+                                //       );
+                                //     },
+                                //   );
+                                // }
                               },
                               child: Image(
                                 width: MediaQuery.of(context).size.width * 0.6,
