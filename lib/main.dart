@@ -6,6 +6,7 @@ import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/login.dart';
 import 'package:my_fsg/screens/proprtyList/addToDo.dart';
 import 'package:my_fsg/screens/proprtyList/noteslist.dart';
+import 'package:my_fsg/screens/splash.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 void main() async {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: MyLogin(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

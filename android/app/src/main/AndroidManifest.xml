@@ -2,7 +2,7 @@
     package="com.example.my_fsg">
    <application
         android:requestLegacyExternalStorage="true"
-        android:label="my_fsg"
+        android:label="My FSG"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
