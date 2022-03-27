@@ -27,20 +27,6 @@ class _AddToDoState extends State<AddToDo> {
     }
   }
 
-  var _image;
-  // ignore: deprecated_member_use
-
-  // List<File>? files = [];
-  // final ImagePicker _picker = ImagePicker();
-  // _getFromGallery() async {
-  //   // ignore: deprecated_member_use
-  //   final List<File>? files = await _picker.getMultiImage();
-
-  //   setState(() {
-  //     _image = File(files!.path);
-  //   });
-  // }
-
   List<Asset> images = <Asset>[];
   String _error = 'No Error Dectected';
 

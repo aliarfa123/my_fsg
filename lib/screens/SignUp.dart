@@ -153,6 +153,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    obscureText: true,
                     controller: passwordController,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -173,6 +174,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    obscureText: true,
                     controller: confirmPass,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
