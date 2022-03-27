@@ -145,8 +145,39 @@ class _MyLoginState extends State<MyLogin> {
                                       ),
                                     ),
                                   )
-                                  .onError((error, stackTrace) =>
-                                      print('Error ${error.toString()}'));
+                                  .onError(
+                                    (error, stackTrace) => showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          actions: [
+                                            IconButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              icon: Icon(
+                                                Icons.close,
+                                                color: primary,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 8.0),
+                                              child: Center(
+                                                child: Text(
+                                                  'Please enter valid Email and Password',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  );
                             },
                             child: Image(
                               width: MediaQuery.of(context).size.width * 0.6,

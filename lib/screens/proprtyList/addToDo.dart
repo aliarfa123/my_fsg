@@ -1,7 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 
 class AddToDo extends StatefulWidget {
   const AddToDo({Key? key}) : super(key: key);
@@ -27,18 +28,77 @@ class _AddToDoState extends State<AddToDo> {
   }
 
   var _image;
+  // ignore: deprecated_member_use
 
-  // Future getImagefromGallery() async {
+  // List<File>? files = [];
+  // final ImagePicker _picker = ImagePicker();
+  // _getFromGallery() async {
   //   // ignore: deprecated_member_use
-  //   File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   final List<File>? files = await _picker.getMultiImage();
 
   //   setState(() {
-  //     _image = File(image.path);
+  //     _image = File(files!.path);
   //   });
   // }
 
+  List<Asset> images = <Asset>[];
+  String _error = 'No Error Dectected';
+
+  Widget buildGridView() {
+    return GridView.count(
+      crossAxisCount: 3,
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        return Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: AssetThumb(
+            asset: asset,
+            width: 300,
+            height: 300,
+          ),
+        );
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    Future<void> loadAssets() async {
+      List<Asset> resultList = <Asset>[];
+      String error = 'No Error Detected';
+
+      try {
+        resultList = await MultiImagePicker.pickImages(
+          maxImages: 10,
+          enableCamera: true,
+          selectedAssets: images,
+          cupertinoOptions: CupertinoOptions(
+            takePhotoIcon: "chat",
+            doneButtonTitle: "Fatto",
+          ),
+          materialOptions: MaterialOptions(
+            actionBarColor: "#28c662",
+            actionBarTitle: "My FSG",
+            allViewTitle: "All Photos",
+            useDetailsView: false,
+            selectCircleStrokeColor: "#28c662",
+          ),
+        );
+      } on Exception catch (e) {
+        error = e.toString();
+      }
+
+      // If the widget was removed from the tree while the asynchronous platform
+      // message was in flight, we want to discard the reply rather than calling
+      // setState to update our non-existent appearance.
+      if (!mounted) return;
+
+      setState(() {
+        images = resultList;
+        _error = error;
+      });
+    }
+
     // final format = DateFormat("yyyy-MM-dd");
     return Scaffold(
       appBar: AppBar(
@@ -130,19 +190,18 @@ class _AddToDoState extends State<AddToDo> {
                       Align(
                         alignment: Alignment.center,
                         child: Center(
-                          child: _image == null
+                          child: images.isEmpty
                               ? Center(
                                   child: Text(
-                                    "Pick an Image",
+                                    "Pick upto 10 Images",
                                     style: TextStyle(
                                       fontSize: 20.0,
                                       color: Colors.grey,
                                     ),
                                   ),
                                 )
-                              : Image.file(
-                                  _image,
-                                  fit: BoxFit.fill,
+                              : Expanded(
+                                  child: buildGridView(),
                                 ),
                         ),
                       ),
@@ -150,7 +209,7 @@ class _AddToDoState extends State<AddToDo> {
                         alignment: Alignment.bottomRight,
                         child: InkWell(
                           onTap: () {
-                            // getImagefromGallery();
+                            loadAssets();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -164,12 +223,6 @@ class _AddToDoState extends State<AddToDo> {
                 const SizedBox(height: 20.0),
                 InkWell(
                   onTap: () async {
-                    // SharedPreferences prefs =
-                    //     await SharedPreferences.getInstance();
-                    // //Return String
-                    // title = prefs.getString('title');
-                    // print(title);
-
                     Navigator.push(
                       context,
                       MaterialPageRoute(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
 import 'package:my_fsg/screens/login.dart';
@@ -20,6 +21,12 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController telController = TextEditingController();
+  TextEditingController confirmPass = TextEditingController();
+
   final ImagePicker _picker = ImagePicker();
   _getFromGallery() async {
     // ignore: deprecated_member_use
@@ -27,6 +34,19 @@ class _SignUpState extends State<SignUp> {
 
     setState(() {
       _image = File(image!.path);
+    });
+  }
+
+  setData(
+    String email,
+    dynamic tel,
+    String name,
+  ) async {
+    DatabaseReference ref = FirebaseDatabase.instance.ref(email);
+
+    await ref.set({
+      "telephone": tel,
+      "name": name,
     });
   }
 
@@ -42,8 +62,6 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
     var size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -75,6 +93,7 @@ class _SignUpState extends State<SignUp> {
               child: Column(
                 children: [
                   TextFormField(
+                    controller: nameController,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       enabledBorder: OutlineInputBorder(
@@ -114,6 +133,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    controller: telController,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       enabledBorder: OutlineInputBorder(
@@ -153,6 +173,7 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 20.0),
                   TextFormField(
+                    controller: confirmPass,
                     decoration: InputDecoration(
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                       enabledBorder: OutlineInputBorder(
@@ -204,7 +225,6 @@ class _SignUpState extends State<SignUp> {
                           child: InkWell(
                             onTap: () {
                               _getFromGallery();
-                              // getImagefromGallery();
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -230,18 +250,56 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                FirebaseAuth.instance
-                                    .createUserWithEmailAndPassword(
-                                        email: emailController.text,
-                                        password: passwordController.text)
-                                    .then(
-                                      (value) => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => MyLogin(),
+                                if (emailController.text.contains('@') &&
+                                    nameController.text.isNotEmpty &&
+                                    passwordController.text ==
+                                        confirmPass.text &&
+                                    passwordController.text.length > 6 &&
+                                    telController.text.isNotEmpty) {
+                                  FirebaseAuth.instance
+                                      .createUserWithEmailAndPassword(
+                                          email: emailController.text,
+                                          password: passwordController.text)
+                                      .then(
+                                        (value) => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MyLogin(),
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
+                                  setData(emailController.text,
+                                      telController.text, nameController.text);
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        actions: [
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            icon: Icon(
+                                              Icons.close,
+                                              color: primary,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: Text(
+                                              'Please fill the form correctly',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                               child: Image(
                                 width: MediaQuery.of(context).size.width * 0.6,
