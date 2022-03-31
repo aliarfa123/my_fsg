@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_fsg/screens/Home/addproperty.dart';
 import 'package:my_fsg/screens/Home/customers.dart';
 import 'package:my_fsg/screens/Home/myProfile.dart';
 import 'package:my_fsg/screens/Home/realestate.dart';
@@ -25,13 +26,7 @@ class _RootAppState extends State<RootApp> {
 
   Widget getBody() {
     List<Widget> pages = [
-      Center(
-        child: Text(
-          "Add Property",
-          style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-      ),
+      const AddProperty(),
       const HomePage(),
       const CustomersPage(),
       MyProfile(

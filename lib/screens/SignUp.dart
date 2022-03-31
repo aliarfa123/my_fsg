@@ -12,6 +12,7 @@ import '../theme/colors.dart';
 import 'bottomNavBar.dart';
 import 'bottomNavBar2.dart';
 
+// ignore: must_be_immutable
 class SignUp extends StatefulWidget {
   bool admin;
   bool cust;
@@ -49,6 +50,7 @@ class _SignUpState extends State<SignUp> {
       _image = File(image!.path);
     });
   }
+  
 
   setData(
     String email,

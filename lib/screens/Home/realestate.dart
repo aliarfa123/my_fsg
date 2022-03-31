@@ -10,27 +10,37 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List houses = [
+    'assets/images/house1.png',
+    'assets/images/house2.png',
+    'assets/images/house3.png',
+    'assets/images/house1.png',
+  ];
+
+  List address = [
+    'House # 12345, St # 88, Sec # 7....',
+    'House # 12345, St # 88, Sec # 7....',
+    'House # 12345, St # 88, Sec # 7....',
+    'House # 12345, St # 88, Sec # 7....',
+  ];
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    List houses = [
-      'assets/images/house1.png',
-      'assets/images/house2.png',
-      'assets/images/house3.png',
-      'assets/images/house1.png',
-    ];
 
-    List address = [
-      'House # 12345, St # 88, Sec # 7....',
-      'House # 12345, St # 88, Sec # 7....',
-      'House # 12345, St # 88, Sec # 7....',
-      'House # 12345, St # 88, Sec # 7....',
-    ];
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: primary,
+      //   onPressed: () {},
+      //   child: Icon(
+      //     Icons.add,
+      //   ),
+      // ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: primary,
-        title: Center(child: Text('Real Estate')),
+        title: Center(
+          child: Text('Real Estate'),
+        ),
       ),
       body: Column(
         children: [

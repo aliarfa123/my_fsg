@@ -252,6 +252,39 @@ class _PropertyDetailState extends State<PropertyDetail> {
                 ),
                 child: Center(
                   child: Text(
+                    'Send Email',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GeneratePDF(
+                      address2: widget.address,
+                      image2: widget.image,
+                    ),
+                  ),
+                );
+              },
+              child: Container(
+                width: size.width * 0.4,
+                height: size.height * 0.05,
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                  child: Text(
                     'Document Storage',
                     style: TextStyle(
                       color: Colors.white,

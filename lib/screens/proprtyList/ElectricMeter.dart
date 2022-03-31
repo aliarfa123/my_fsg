@@ -12,7 +12,8 @@ class _ElectricMeterState extends State<ElectricMeter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: primary),
+      appBar:
+          AppBar(backgroundColor: primary, title: Text('Electricity Meter')),
     );
   }
 }
