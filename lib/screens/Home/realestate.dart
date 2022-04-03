@@ -1,3 +1,5 @@
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/proprtyList/propertydetial.dart';
 import 'package:my_fsg/theme/colors.dart';
@@ -10,6 +12,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // readData() async {
+  //   Query databaseref = FirebaseDatabase.instance
+  //       .ref('Addresses')
+  //       .orderByKey()
+  //       .orderByChild('Adress');
+  //   databaseref.onValue.listen((DatabaseEvent event) {
+  //     final data = event.snapshot.value;
+  //     print(data);
+  //     setState(() {});
+  //   });
+  // }
+
+  @override
+  // ignore: must_call_super
+  void initState() {
+    getImage();
+  }
+
   List houses = [
     'assets/images/house1.png',
     'assets/images/house2.png',
@@ -23,18 +43,22 @@ class _HomePageState extends State<HomePage> {
     'House # 12345, St # 88, Sec # 7....',
     'House # 12345, St # 88, Sec # 7....',
   ];
+  var _url;
+  getImage() {
+    final ref = FirebaseStorage.instance
+        .ref('Property/')
+        .child('image_picker8294153886355980194.jpg');
+    var url = ref.getDownloadURL();
+    print(url);
+    _url = url;
+    return _url;
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: primary,
-      //   onPressed: () {},
-      //   child: Icon(
-      //     Icons.add,
-      //   ),
-      // ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: primary,
@@ -72,70 +96,105 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: Container(
-              child: ListView.builder(
-                itemCount: houses.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PropertyDetail(
-                            image: houses[index],
-                            address: address[index],
-                          ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                blurRadius: 4,
-                                offset: Offset(0, 4),
-                              )
-                            ]),
-                        height: size.height * 0.11,
-                        child: Center(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 30,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 8.0,
-                                  bottom: 8.0,
-                                ),
-                                child: Image(
-                                  image: AssetImage(
-                                    houses[index],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            title: Text(
-                              address[index],
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ),
-                        ),
+            child: StreamBuilder(
+              stream: FirebaseDatabase.instance
+                  .ref('Addresses')
+                  .orderByKey()
+                  .limitToLast(10)
+                  .onValue,
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                final tilesList = <ListTile>[];
+                if (snapshot.hasData) {
+                  final address = Map<String, dynamic>.from(
+                      (snapshot.data!).snapshot.value);
+                  address.forEach((key, value) {
+                    final nextAdress = Map<String, dynamic>.from(value);
+                    final adressTile = ListTile(
+                      // leading: Image(
+                      //   image: NetworkImage(
+                      //     getImage(
+                      //       nextAdress['Adress'].split(' ??? ').last.toString(),
+                      //     ),
+                      //   ),
+                      // ),
+                      title: Text(
+                        nextAdress['Adress'].toString().split('???').first,
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                    tilesList.add(adressTile);
+                  });
+                }
+                return ListView(
+                  children: tilesList,
+                );
+              },
             ),
           ),
+          // Expanded(
+          //   child: Container(
+          //     child: ListView.builder(
+          //       itemCount: houses.length,
+          //       itemBuilder: (context, index) {
+          //         return GestureDetector(
+          //           onTap: () {
+          //             Navigator.push(
+          //               context,
+          //               MaterialPageRoute(
+          //                 builder: (context) => PropertyDetail(
+          //                   image: houses[index],
+          //                   address: address[index],
+          //                 ),
+          //               ),
+          //             );
+          //           },
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(8.0),
+          //             child: Container(
+          //               decoration: BoxDecoration(
+          //                   color: Colors.white,
+          //                   border: Border.all(color: Colors.grey),
+          //                   borderRadius: BorderRadius.circular(10),
+          //                   boxShadow: [
+          //                     BoxShadow(
+          //                       color: Colors.grey.withOpacity(0.5),
+          //                       blurRadius: 4,
+          //                       offset: Offset(0, 4),
+          //                     )
+          //                   ]),
+          //               height: size.height * 0.11,
+          //               child: Center(
+          //                 child: ListTile(
+          //                   leading: CircleAvatar(
+          //                     backgroundColor: Colors.white,
+          //                     radius: 30,
+          //                     child: Padding(
+          //                       padding: const EdgeInsets.only(
+          //                         top: 8.0,
+          //                         bottom: 8.0,
+          //                       ),
+          //                       child: Image(
+          //                         image: AssetImage(
+          //                           houses[index],
+          //                         ),
+          //                       ),
+          //                     ),
+          //                   ),
+          //                   title: Text(
+          //                     address[index],
+          //                     style: TextStyle(
+          //                       fontSize: 17,
+          //                       color: Colors.grey[600],
+          //                     ),
+          //                   ),
+          //                 ),
+          //               ),
+          //             ),
+          //           ),
+          //         );
+          //       },
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
