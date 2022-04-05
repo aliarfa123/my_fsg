@@ -5,7 +5,8 @@ import 'dart:io';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class NotesList extends StatefulWidget {
-  const NotesList({Key? key}) : super(key: key);
+  var name;
+  NotesList({Key? key, required this.name}) : super(key: key);
 
   @override
   State<NotesList> createState() => _NotesListState();
@@ -43,6 +44,7 @@ class _NotesListState extends State<NotesList> {
   String? title = '';
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     TextEditingController titleText = TextEditingController();
     TextEditingController desc = TextEditingController();
     return Scaffold(
@@ -52,63 +54,55 @@ class _NotesListState extends State<NotesList> {
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              Text(data1.toString()),
-              // Expanded(
-              //   child: FutureBuilder(
-              //     // future: readData(),
-              //     builder: ((context, snapshot) {
-              //       if (snapshot.data != null) {
-              //         return ListView.builder(
-              //           itemCount: 1,
-              //           itemBuilder: ((context, index) => ListTile(
-              //                 title: Text(
-              //                   snapshot.data.toString(),
-              //                 ),
-              //               )),
-              //         );
-              //       } else {
-              //         return CircularProgressIndicator();
-              //       }
-              //     }),
-              //   ),
-              // ),
-              // Text(data1.toString()),
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.8,
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Text(
-              //     notes[0],
-              //     style: TextStyle(fontSize: 20, color: Colors.black),
-              //   ),
-              // ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.8,
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Text(
-              //     notes[1],
-              //     style: TextStyle(fontSize: 20, color: Colors.black),
-              //   ),
-              // ),
-              // Container(
-              //   width: MediaQuery.of(context).size.width * 0.8,
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Text(
-              //     notes[2],
-              //     style: TextStyle(fontSize: 20, color: Colors.black),
-              //   ),
-              // ),
-              // if (title != null)
-              //   Container(
-              //     width: MediaQuery.of(context).size.width * 0.8,
-              //     padding: const EdgeInsets.all(16.0),
-              //     child: Text(
-              //       title!,
-              //       style: TextStyle(fontSize: 20, color: Colors.black),
-              //     ),
-              //   ),
-            ],
+          Expanded(
+            child: StreamBuilder(
+              stream: FirebaseDatabase.instance
+                  .ref('Notes')
+                  .child(widget.name)
+                  .orderByKey()
+                  .onValue,
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                final tilesList = <Widget>[];
+                if (snapshot.hasData) {
+                  final address = Map<String, dynamic>.from(
+                      (snapshot.data!).snapshot.value);
+                  address.forEach((key, value) {
+                    final nextAdress = Map<String, dynamic>.from(value);
+                    final adressTile = Padding(
+                      padding: EdgeInsets.all(9),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.grey),
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  blurRadius: 4,
+                                  offset: Offset(0, 4),
+                                )
+                              ]),
+                          height: size.height * 0.11,
+                          child: Center(
+                            child: ListTile(
+                              title: Text(
+                                nextAdress[0  ].toString(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                    tilesList.add(adressTile);
+                  });
+                }
+                return ListView(
+                  children: tilesList,
+                );
+              },
+            ),
           ),
           Align(
             alignment: Alignment.bottomRight,

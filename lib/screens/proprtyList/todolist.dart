@@ -26,13 +26,14 @@ class _ToDoListState extends State<ToDoList> {
           backgroundColor: primary,
           leading: GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => PropertyDetail(
-                            address: 'House # 12345, St # 88, Sec # 7....',
-                            image: 'assets/images/house3.png',
-                          )));
+              Navigator.pop(context);
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => PropertyDetail(
+              //               address: 'House # 12345, St # 88, Sec # 7....',
+              //               image: 'assets/images/house3.png',
+              //             )));
             },
             child: Icon(
               Icons.arrow_back,
@@ -144,33 +145,33 @@ class _ToDoListState extends State<ToDoList> {
                           ],
                         ),
                       ),
-                    if (valueFourth == false && widget.title != null)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              onChanged: (value) {
-                                setState(() {
-                                  this.valueFourth = value!;
-                                });
-                              },
-                              checkColor: Colors.white,
-                              activeColor: primary,
-                              value: this.valueFourth,
-                              // onChanged: (bool value) {
-                              //   setState(() {
-                              //     this.valuefirst = value;
-                              //   });
-                              // },
-                            ),
-                            Text(
-                              widget.title,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
+                    // if (valueFourth == false && widget.title != null)
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Row(
+                    //       children: [
+                    //         Checkbox(
+                    //           onChanged: (value) {
+                    //             setState(() {
+                    //               this.valueFourth = value!;
+                    //             });
+                    //           },
+                    //           checkColor: Colors.white,
+                    //           activeColor: primary,
+                    //           value: this.valueFourth,
+                    //           // onChanged: (bool value) {
+                    //           //   setState(() {
+                    //           //     this.valuefirst = value;
+                    //           //   });
+                    //           // },
+                    //         ),
+                    //         // Text(
+                    //         //   widget.title,
+                    //         //   style: TextStyle(fontSize: 20),
+                    //         // ),
+                    //       ],
+                    //     ),
+                    //   ),
                   ],
                 ),
                 Align(
@@ -265,28 +266,28 @@ class _ToDoListState extends State<ToDoList> {
                           ],
                         ),
                       ),
-                    if (valueFourth == true && widget.title != null)
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Checkbox(
-                              onChanged: (value) {
-                                setState(() {
-                                  this.valueFourth = value!;
-                                });
-                              },
-                              checkColor: Colors.white,
-                              activeColor: primary,
-                              value: this.valueFourth,
-                            ),
-                            Text(
-                              widget.title,
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
+                    // if (valueFourth == true && widget.title != null)
+                    //   Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: Row(
+                    //       children: [
+                    //         Checkbox(
+                    //           onChanged: (value) {
+                    //             setState(() {
+                    //               this.valueFourth = value!;
+                    //             });
+                    //           },
+                    //           checkColor: Colors.white,
+                    //           activeColor: primary,
+                    //           value: this.valueFourth,
+                    //         ),
+                    //         Text(
+                    //           widget.title,
+                    //           style: TextStyle(fontSize: 20),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
                   ],
                 ),
                 Align(

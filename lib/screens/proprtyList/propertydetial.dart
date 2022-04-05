@@ -6,6 +6,7 @@ import 'package:my_fsg/screens/proprtyList/noteslist.dart';
 import 'package:my_fsg/screens/proprtyList/pdf.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class PropertyDetail extends StatefulWidget {
@@ -29,12 +30,13 @@ class _PropertyDetailState extends State<PropertyDetail> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => RootApp(),
-              ),
-            );
+            Navigator.pop(context);
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => RootApp(),
+            //   ),
+            // );
           },
           child: Icon(
             Icons.arrow_back,
@@ -89,7 +91,9 @@ class _PropertyDetailState extends State<PropertyDetail> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ToDoList(),
+                    builder: (context) => ToDoList(
+                      title: widget.address,
+                    ),
                   ),
                 );
               },
@@ -120,7 +124,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NotesList(),
+                    builder: (context) => NotesList(name: widget.address),
                   ),
                 );
               },
@@ -243,19 +247,24 @@ class _PropertyDetailState extends State<PropertyDetail> {
                   ),
                 );
               },
-              child: Container(
-                width: size.width * 0.4,
-                height: size.height * 0.05,
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    'Send Email',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                onTap: () {
+                  launch('gmail.com');
+                },
+                child: Container(
+                  width: size.width * 0.4,
+                  height: size.height * 0.05,
+                  decoration: BoxDecoration(
+                    color: primary,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Send Email',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

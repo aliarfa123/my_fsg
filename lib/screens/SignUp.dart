@@ -31,15 +31,23 @@ class _SignUpState extends State<SignUp> {
   TextEditingController telController = TextEditingController();
   TextEditingController confirmPass = TextEditingController();
 
+  DatabaseReference db = FirebaseDatabase.instance.ref();
   final ImagePicker _picker = ImagePicker();
-
-  putImage(String email) async {
+  var _image;
+  putImage(String email, String pushKey) async {
+    String imageurl;
     if (_image == null) return;
     final destination = 'Sign Up/' + email.replaceAll('.com', '');
     final ref = firebase_storage.FirebaseStorage.instance
         .ref(destination)
         .child('Logo');
-    await ref.putFile(_image!);
+    firebase_storage.UploadTask uploadTask = ref.putFile(_image);
+    await uploadTask.whenComplete(() async {
+      imageurl = await uploadTask.snapshot.ref.getDownloadURL();
+      db.child('Customers').child(pushKey).child('image_link').set(imageurl);
+      print(imageurl);
+    });
+    // ref.putFile(_image!);
   }
 
   _getFromGallery() async {
@@ -50,15 +58,15 @@ class _SignUpState extends State<SignUp> {
       _image = File(image!.path);
     });
   }
-  
 
   setData(
     String email,
     dynamic tel,
     String name,
+    String pushKey,
   ) async {
     DatabaseReference ref =
-        FirebaseDatabase.instance.ref(email.replaceAll('.com', ''));
+        FirebaseDatabase.instance.ref('Customers').child(pushKey);
     await ref.set({
       'email': email,
       "telephone": tel,
@@ -66,7 +74,19 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-  var _image;
+  setData2(
+    String email,
+    dynamic tel,
+    String name,
+  ) async {
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref(email.toString().replaceAll('.com', ''));
+    await ref.set({
+      'email': email,
+      "telephone": tel,
+      "name": name,
+    });
+  }
 
   // Future getImagefromGallery() async {
   //   File? image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -281,15 +301,24 @@ class _SignUpState extends State<SignUp> {
                           children: [
                             GestureDetector(
                               onTap: () {
+                                String pushKey = db.push().key.toString();
                                 if (emailController.text.contains('@') &&
                                     nameController.text.isNotEmpty &&
                                     passwordController.text ==
                                         confirmPass.text &&
                                     passwordController.text.length > 6 &&
                                     telController.text.isNotEmpty) {
-                                  putImage(emailController.text);
-                                  setData(emailController.text,
-                                      telController.text, nameController.text);
+                                  putImage(emailController.text, pushKey);
+                                  setData(
+                                      emailController.text,
+                                      telController.text,
+                                      nameController.text,
+                                      pushKey);
+                                  setData2(
+                                    emailController.text,
+                                    telController.text,
+                                    nameController.text,
+                                  );
                                   createUser(emailController.text,
                                       passwordController.text);
                                 } else {

@@ -90,6 +90,8 @@ class _AddPropertyState extends State<AddProperty> {
   }
 
   TextEditingController adressController = TextEditingController();
+  TextEditingController notesController = TextEditingController();
+  TextEditingController descController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -170,7 +172,60 @@ class _AddPropertyState extends State<AddProperty> {
               ],
             ),
           ),
-          ElevatedButton(
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'Add Notes',
+              style: TextStyle(
+                fontSize: 25,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: notesController,
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(color: primary)),
+                labelText: 'Title',
+                fillColor: Colors.grey.shade100,
+                filled: true,
+                focusColor: primary,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: descController,
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(color: primary)),
+                labelText: 'Description',
+                fillColor: Colors.grey.shade100,
+                filled: true,
+                focusColor: primary,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+          TextButton(
             onPressed: () {
               String pushKey = db.push().key.toString();
               db
@@ -178,6 +233,11 @@ class _AddPropertyState extends State<AddProperty> {
                   .child(pushKey)
                   .child('Address')
                   .set(adressController.text);
+              db
+                  .child('Notes')
+                  .child(adressController.text)
+                  .push()
+                  .set(notesController.text);
               putImage(pushKey);
             },
             child: Text(

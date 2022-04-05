@@ -135,7 +135,7 @@ class _MyLoginState extends State<MyLogin> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              if (emailController.text ==
+                              if (emailController.text.toLowerCase() ==
                                       'myfsg000@gmail.com' &&
                                   passwordController.text == '123abc??') {
                                 Navigator.push(
