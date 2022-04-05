@@ -59,7 +59,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                   width: size.width * 0.55,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(widget.image),
+                      image: NetworkImage(widget.image),
                       fit: BoxFit.fill,
                     ),
                   ),

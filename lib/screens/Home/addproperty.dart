@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_fsg/theme/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddProperty extends StatefulWidget {
   const AddProperty({Key? key}) : super(key: key);
@@ -17,6 +19,8 @@ class _AddPropertyState extends State<AddProperty> {
   var _image;
   var imageName;
   var imagePath;
+  FirebaseAuth mAuth = FirebaseAuth.instance;
+  DatabaseReference db = FirebaseDatabase.instance.ref();
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   final ImagePicker _picker = ImagePicker();
@@ -31,13 +35,50 @@ class _AddPropertyState extends State<AddProperty> {
     });
   }
 
-  putImage() async {
-    if (_image == null) return;
+  putImage(String pushKey) async {
+    String imageurl;
+    // if (_image == null) return;
     final destination = 'Property';
     final ref = firebase_storage.FirebaseStorage.instance
         .ref(destination)
         .child(imageName);
-    await ref.putFile(_image!);
+    firebase_storage.UploadTask uploadTask = ref.putFile(_image);
+    await uploadTask.whenComplete(() async {
+      imageurl = await uploadTask.snapshot.ref.getDownloadURL();
+      db.child('Addresses').child(pushKey).child('image_link').set(imageurl);
+      print(imageurl);
+    });
+    // print(ref.getDownloadURL());
+    // uploadTask.then(() {
+    //   imageurl = ref.getDownloadURL().toString();
+    //   print(imageurl);
+    //   // print(ref.getDownloadURL());
+    //   db.child('Addresses').child(pushKey).child('image_link').set(imageurl);
+    //   // print(imageurl);
+    // }).catchError((onError) {
+    //   print(onError);
+    // });
+    // return imageurl;
+    // uploadTask
+    //     .whenComplete(() => {
+    //           db
+    //               .child('Addresses')
+    //               .push()
+    //               .child('imageLink')
+    //               .set(ref.getDownloadURL()),
+    //         })
+    //     .catchError((onError) {
+    //   print(onError);
+    // });
+
+    // uploadTask.then((res) => {
+    //       // print(ref.getDownloadURL()),
+    //       db
+    //           .child('Addresses')
+    //           .push()
+    //           .child('imageLink')
+    //           .set(res.ref.getDownloadURL()),
+    //     });
   }
 
   readData() async {
@@ -52,7 +93,7 @@ class _AddPropertyState extends State<AddProperty> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    DatabaseReference db = FirebaseDatabase.instance.ref();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -131,13 +172,13 @@ class _AddPropertyState extends State<AddProperty> {
           ),
           ElevatedButton(
             onPressed: () {
+              String pushKey = db.push().key.toString();
               db
                   .child('Addresses')
-                  .push()
-                  .child('Adress')
-                  .set(adressController.text + " ???  " + imageName);
-              // db.child('Addresses').push().child('Image').set(imageName);
-              putImage();
+                  .child(pushKey)
+                  .child('Address')
+                  .set(adressController.text);
+              putImage(pushKey);
             },
             child: Text(
               'Add',
