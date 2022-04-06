@@ -304,6 +304,7 @@ class _SignUpState extends State<SignUp> {
                               onTap: () {
                                 String pushKey = db.push().key.toString();
                                 if (emailController.text.contains('@') &&
+                                    emailController.text.contains('.com') &&
                                     nameController.text.isNotEmpty &&
                                     passwordController.text ==
                                         confirmPass.text &&
@@ -321,7 +322,31 @@ class _SignUpState extends State<SignUp> {
                                     nameController.text,
                                   );
                                   createUser(emailController.text,
-                                      passwordController.text);
+                                          passwordController.text)
+                                      .then(
+                                    (value) => showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          actions: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 8.0),
+                                              child: Center(
+                                                child: Text(
+                                                  'Sign Up Successful',
+                                                  style: TextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ),
+                                  );
                                 } else {
                                   showDialog(
                                     context: context,

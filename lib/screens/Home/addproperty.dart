@@ -296,62 +296,79 @@ class _AddPropertyState extends State<AddProperty> {
             ),
             GestureDetector(
               onTap: () {
-                String pushKey = db.push().key.toString();
-                db
-                    .child('Addresses')
-                    .child(pushKey)
-                    .child('Address')
-                    .set(adressController.text);
-                db
-                    .child('Notes')
-                    .child(adressController.text)
-                    .child(pushKey)
-                    .child('Title')
-                    .set(notesController.text);
-                db
-                    .child('Notes')
-                    .child(adressController.text)
-                    .child(pushKey)
-                    .child('Desc')
-                    .set(descController.text);
-                db
-                    .child('Addresses')
-                    .child(pushKey)
-                    .child('Name')
-                    .set(nameController.text);
-                db
-                    .child('Addresses')
-                    .child(pushKey)
-                    .child('Contact')
-                    .set(contactController.text);
-                db
-                    .child('Addresses')
-                    .child(pushKey)
-                    .child('Email')
-                    .set(emailController.text);
-                db
-                    .child('Addresses')
-                    .child(pushKey)
-                    .child('Tel')
-                    .set(telController.text);
-                putImage(pushKey);
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        content: Text('Form Filled Successfully'),
-                      );
-                    });
-                setState(() {
-                  adressController.clear();
-                  descController.clear();
-                  contactController.clear();
-                  emailController.clear();
-                  nameController.clear();
-                  telController.clear();
-                  notesController.clear();
-                  _image = null;
-                });
+                if (adressController.text.isNotEmpty &&
+                    nameController.text.isNotEmpty &&
+                    contactController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
+                    telController.text.isNotEmpty &&
+                    notesController.text.isNotEmpty &&
+                    descController.text.isNotEmpty &&
+                    _image != null) {
+                  String pushKey = db.push().key.toString();
+                  db
+                      .child('Addresses')
+                      .child(pushKey)
+                      .child('Address')
+                      .set(adressController.text);
+                  db
+                      .child('Notes')
+                      .child(adressController.text)
+                      .child(pushKey)
+                      .child('Title')
+                      .set(notesController.text);
+                  db
+                      .child('Notes')
+                      .child(adressController.text)
+                      .child(pushKey)
+                      .child('Desc')
+                      .set(descController.text);
+                  db
+                      .child('Addresses')
+                      .child(pushKey)
+                      .child('Name')
+                      .set(nameController.text);
+                  db
+                      .child('Addresses')
+                      .child(pushKey)
+                      .child('Contact')
+                      .set(contactController.text);
+                  db
+                      .child('Addresses')
+                      .child(pushKey)
+                      .child('Email')
+                      .set(emailController.text);
+                  db
+                      .child('Addresses')
+                      .child(pushKey)
+                      .child('Tel')
+                      .set(telController.text);
+                  putImage(pushKey);
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Text('Form Filled Successfully'),
+                        );
+                      });
+                  setState(() {
+                    adressController.clear();
+                    descController.clear();
+                    contactController.clear();
+                    emailController.clear();
+                    nameController.clear();
+                    telController.clear();
+                    notesController.clear();
+                    _image = null;
+                  });
+                } else {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          content: Text('Please Fill all the form fields'),
+                        );
+                      });
+                }
               },
               child: Container(
                 decoration: BoxDecoration(

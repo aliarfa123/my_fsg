@@ -283,31 +283,38 @@ class _PropertyDetailState extends State<PropertyDetail> {
             SizedBox(
               height: 20,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GeneratePDF(
-                      address2: widget.address,
-                      image2: widget.image,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => GeneratePDF(
+                        address2: widget.address,
+                        image2: widget.image,
+                        contact: widget.contact,
+                        email: widget.email,
+                        name: widget.name,
+                        tel: widget.tel,
+                      ),
                     ),
+                  );
+                },
+                child: Container(
+                  width: size.width * 0.4,
+                  height: size.height * 0.05,
+                  decoration: BoxDecoration(
+                    color: primary,
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                );
-              },
-              child: Container(
-                width: size.width * 0.4,
-                height: size.height * 0.05,
-                decoration: BoxDecoration(
-                  color: primary,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    'Document Storage',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  child: Center(
+                    child: Text(
+                      'Document Storage',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

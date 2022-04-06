@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: RootApp(),
+      home: SelectionPage(),
       debugShowCheckedModeBanner: false,
     );
   }
