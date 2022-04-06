@@ -91,7 +91,7 @@ class _NotesListState extends State<NotesList> {
                           child: Center(
                             child: ListTile(
                               title: Text(
-                                nextAdress['Desc'].toString(),
+                                nextAdress['Title'].toString(),
                               ),
                             ),
                           ),

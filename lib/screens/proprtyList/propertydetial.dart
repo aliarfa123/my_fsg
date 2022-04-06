@@ -8,12 +8,20 @@ import 'package:url_launcher/url_launcher.dart';
 
 // ignore: must_be_immutable
 class PropertyDetail extends StatefulWidget {
+  var name;
+  var contact;
+  var email;
+  var tel;
   var image;
   var address;
   PropertyDetail({
     Key? key,
     required this.image,
     required this.address,
+    required this.name,
+    required this.email,
+    required this.contact,
+    required this.tel,
   }) : super(key: key);
 
   @override
@@ -195,36 +203,40 @@ class _PropertyDetailState extends State<PropertyDetail> {
                     height: 20,
                   ),
                   Text(
-                    'Name:       ________________',
+                    'Name:    ' + widget.name.toString(),
                     style: TextStyle(
                       fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'Contact:    ________________',
+                    'Contact:   ' + widget.contact.toString(),
                     style: TextStyle(
                       fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'Email:        ________________',
+                    'Email:   ' + widget.email.toString(),
                     style: TextStyle(
                       fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'Tel:            ________________',
+                    'Tel:   ' + widget.tel.toString(),
                     style: TextStyle(
                       fontSize: 18,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

@@ -59,6 +59,10 @@ class _AddPropertyState extends State<AddProperty> {
   TextEditingController adressController = TextEditingController();
   TextEditingController notesController = TextEditingController();
   TextEditingController descController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController telController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -71,198 +75,283 @@ class _AddPropertyState extends State<AddProperty> {
           child: Text('Add Property'),
         ),
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 20.0),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: adressController,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: primary)),
-                labelText: 'Address',
-                fillColor: Colors.grey.shade100,
-                filled: true,
-                focusColor: primary,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 20.0),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Add Property',
+                style: TextStyle(
+                  fontSize: 25,
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: adressController,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusedBorder: OutlineInputBorder(
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: adressController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: primary)),
-                labelText: 'Address',
-                fillColor: Colors.grey.shade100,
-                filled: true,
-                focusColor: primary,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: adressController,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: primary)),
-                labelText: 'Address',
-                fillColor: Colors.grey.shade100,
-                filled: true,
-                focusColor: primary,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            height: size.height * 0.2,
-            width: size.width * 0.95,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black),
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Center(
-                    child: _image == null
-                        ? Center(
-                            child: Text(
-                              "Pick an Image",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          )
-                        : Image.file(
-                            _image,
-                            fit: BoxFit.fill,
-                          ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Address',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: InkWell(
-                    onTap: () {
-                      _getFromGallery();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(Icons.image),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Name',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: contactController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Contact',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Email',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: telController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Tel',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              height: size.height * 0.2,
+              width: size.width * 0.95,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: _image == null
+                          ? Center(
+                              child: Text(
+                                "Pick an Image",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            )
+                          : Image.file(
+                              _image,
+                              fit: BoxFit.fill,
+                            ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Add Notes',
-              style: TextStyle(
-                fontSize: 25,
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: InkWell(
+                      onTap: () {
+                        _getFromGallery();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.image),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: notesController,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Add Notes',
+                style: TextStyle(
+                  fontSize: 25,
                 ),
-                focusedBorder: OutlineInputBorder(
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: notesController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: primary)),
-                labelText: 'Title',
-                fillColor: Colors.grey.shade100,
-                filled: true,
-                focusColor: primary,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Title',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              controller: descController,
-              decoration: InputDecoration(
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-                focusedBorder: OutlineInputBorder(
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                controller: descController,
+                decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(color: primary)),
-                labelText: 'Description',
-                fillColor: Colors.grey.shade100,
-                filled: true,
-                focusColor: primary,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide(color: primary)),
+                  labelText: 'Description',
+                  fillColor: Colors.grey.shade100,
+                  filled: true,
+                  focusColor: primary,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                 ),
               ),
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              String pushKey = db.push().key.toString();
-              db
-                  .child('Addresses')
-                  .child(pushKey)
-                  .child('Address')
-                  .set(adressController.text);
-              db
-                  .child('Notes')
-                  .child(adressController.text)
-                  .child(pushKey)
-                  .child('Title')
-                  .set(notesController.text);
-              db
-                  .child('Notes')
-                  .child(adressController.text)
-                  .child(pushKey)
-                  .child('Desc')
-                  .set(descController.text);
-              putImage(pushKey);
-            },
-            child: Text(
-              'Add',
+            GestureDetector(
+              onTap: () {
+                String pushKey = db.push().key.toString();
+                db
+                    .child('Addresses')
+                    .child(pushKey)
+                    .child('Address')
+                    .set(adressController.text);
+                db
+                    .child('Notes')
+                    .child(adressController.text)
+                    .child(pushKey)
+                    .child('Title')
+                    .set(notesController.text);
+                db
+                    .child('Notes')
+                    .child(adressController.text)
+                    .child(pushKey)
+                    .child('Desc')
+                    .set(descController.text);
+                db
+                    .child('Addresses')
+                    .child(pushKey)
+                    .child('Name')
+                    .set(nameController.text);
+                db
+                    .child('Addresses')
+                    .child(pushKey)
+                    .child('Contact')
+                    .set(contactController.text);
+                db
+                    .child('Addresses')
+                    .child(pushKey)
+                    .child('Email')
+                    .set(emailController.text);
+                db
+                    .child('Addresses')
+                    .child(pushKey)
+                    .child('Tel')
+                    .set(telController.text);
+                putImage(pushKey);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: primary,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                width: size.width * 0.3,
+                height: size.height * 0.06,
+                child: Center(
+                  child: Text(
+                    'Add',
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

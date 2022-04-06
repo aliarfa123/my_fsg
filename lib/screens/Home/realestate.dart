@@ -118,6 +118,10 @@ class _HomePageState extends State<HomePage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => PropertyDetail(
+                                contact: nextAdress['Contact'].toString(),
+                                email: nextAdress['Email'].toString(),
+                                name: nextAdress['Name'].toString(),
+                                tel: nextAdress['Tel'].toString(),
                                 image: nextAdress['image_link'].toString(),
                                 address: nextAdress['Address'].toString(),
                               ),
