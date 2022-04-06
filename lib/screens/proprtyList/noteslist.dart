@@ -13,6 +13,7 @@ class NotesList extends StatefulWidget {
 }
 
 class _NotesListState extends State<NotesList> {
+  DatabaseReference db = FirebaseDatabase.instance.ref();
   var data1;
   setData(String title, String desc) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('notes/' + title);
@@ -58,7 +59,9 @@ class _NotesListState extends State<NotesList> {
             child: StreamBuilder(
               stream: FirebaseDatabase.instance
                   .ref('Notes')
-                  .child(widget.name)
+                  .child(
+                    widget.name.toString(),
+                  )
                   .orderByKey()
                   .onValue,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -88,7 +91,7 @@ class _NotesListState extends State<NotesList> {
                           child: Center(
                             child: ListTile(
                               title: Text(
-                                nextAdress[0  ].toString(),
+                                nextAdress['Desc'].toString(),
                               ),
                             ),
                           ),
@@ -204,16 +207,19 @@ class _NotesListState extends State<NotesList> {
                                   const SizedBox(height: 20.0),
                                   InkWell(
                                     onTap: () {
-                                      //   SharedPreferences prefs =
-                                      //       await SharedPreferences.getInstance();
-                                      //   //Return String
-                                      //   title = prefs.getString('title');
-                                      //   print(title);
-                                      //   setState(() {
-                                      //     _title = title;
-                                      //     print(_title);
-                                      //   });
-                                      setData(titleText.text, desc.text);
+                                      String pushKey = db.push().key.toString();
+                                      db
+                                          .child('Notes')
+                                          .child(widget.name)
+                                          .child(pushKey)
+                                          .child('Title')
+                                          .set(titleText.text);
+                                      db
+                                          .child('Notes')
+                                          .child(widget.name)
+                                          .child(pushKey)
+                                          .child('Desc')
+                                          .set(desc.text);
                                       Navigator.pop(context);
                                     },
                                     child: Padding(

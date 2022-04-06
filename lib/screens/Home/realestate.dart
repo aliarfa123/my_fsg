@@ -102,7 +102,6 @@ class _HomePageState extends State<HomePage> {
               stream: FirebaseDatabase.instance
                   .ref('Addresses')
                   .orderByKey()
-                  .limitToLast(10)
                   .onValue,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 final tilesList = <Widget>[];

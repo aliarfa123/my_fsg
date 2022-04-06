@@ -236,8 +236,15 @@ class _AddPropertyState extends State<AddProperty> {
               db
                   .child('Notes')
                   .child(adressController.text)
-                  .push()
+                  .child(pushKey)
+                  .child('Title')
                   .set(notesController.text);
+              db
+                  .child('Notes')
+                  .child(adressController.text)
+                  .child(pushKey)
+                  .child('Desc')
+                  .set(descController.text);
               putImage(pushKey);
             },
             child: Text(
