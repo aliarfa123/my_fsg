@@ -46,37 +46,6 @@ class _AddPropertyState extends State<AddProperty> {
       db.child('Addresses').child(pushKey).child('image_link').set(imageurl);
       print(imageurl);
     });
-    // print(ref.getDownloadURL());
-    // uploadTask.then(() {
-    //   imageurl = ref.getDownloadURL().toString();
-    //   print(imageurl);
-    //   // print(ref.getDownloadURL());
-    //   db.child('Addresses').child(pushKey).child('image_link').set(imageurl);
-    //   // print(imageurl);
-    // }).catchError((onError) {
-    //   print(onError);
-    // });
-    // return imageurl;
-    // uploadTask
-    //     .whenComplete(() => {
-    //           db
-    //               .child('Addresses')
-    //               .push()
-    //               .child('imageLink')
-    //               .set(ref.getDownloadURL()),
-    //         })
-    //     .catchError((onError) {
-    //   print(onError);
-    // });
-
-    // uploadTask.then((res) => {
-    //       // print(ref.getDownloadURL()),
-    //       db
-    //           .child('Addresses')
-    //           .push()
-    //           .child('imageLink')
-    //           .set(res.ref.getDownloadURL()),
-    //     });
   }
 
   readData() async {
@@ -105,6 +74,50 @@ class _AddPropertyState extends State<AddProperty> {
       body: Column(
         children: [
           const SizedBox(height: 20.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: adressController,
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(color: primary)),
+                labelText: 'Address',
+                fillColor: Colors.grey.shade100,
+                filled: true,
+                focusColor: primary,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextFormField(
+              controller: adressController,
+              decoration: InputDecoration(
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(color: primary)),
+                labelText: 'Address',
+                fillColor: Colors.grey.shade100,
+                filled: true,
+                focusColor: primary,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextFormField(

@@ -13,15 +13,6 @@ class _CustomersPageState extends State<CustomersPage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    List houses = [
-      'assets/images/person(1).jpg',
-      'assets/images/person(2).jpg',
-    ];
-
-    List address = [
-      'John Smith',
-      'Andrea Doe',
-    ];
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -36,7 +27,6 @@ class _CustomersPageState extends State<CustomersPage> {
               stream: FirebaseDatabase.instance
                   .ref('Customers')
                   .orderByKey()
-                  .limitToLast(10)
                   .onValue,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 final tilesList = <Widget>[];
