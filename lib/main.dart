@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: primary,
       ),
-      home: LogInScreen(),
+      home: RootApp(),
       debugShowCheckedModeBanner: false,
     );
   }

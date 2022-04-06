@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/screens/Selection.dart';
 import 'package:my_fsg/screens/SignUp.dart';
+import 'package:my_fsg/screens/approval.dart';
 import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/bottomNavBar2.dart';
 import 'package:my_fsg/theme/colors.dart';
@@ -52,6 +54,19 @@ class MyLogin extends StatefulWidget {
 class _MyLoginState extends State<MyLogin> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  var approved;
+  readData() async {
+    DatabaseReference databaseref = FirebaseDatabase.instance.ref(
+        emailController.text.toString().replaceAll('.com', '') + '/Approved');
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      setState(() {
+        approved = data;
+      });
+      print(approved);
+      return approved;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,32 +150,45 @@ class _MyLoginState extends State<MyLogin> {
                         children: [
                           GestureDetector(
                             onTap: () {
+                              readData();
                               if (emailController.text.toLowerCase() ==
                                       'myfsg000@gmail.com' &&
                                   passwordController.text == '123abc??') {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RootApp(
-                                      email: emailController.text,
-                                    ),
-                                  ),
+                                      builder: (context) => RootApp(
+                                            email: emailController.text,
+                                          )),
                                 );
                               } else {
                                 FirebaseAuth.instance
                                     .signInWithEmailAndPassword(
-                                        email: emailController.text,
-                                        password: passwordController.text)
-                                    .then(
-                                      (value) => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => RootAppCust(
-                                            email: emailController.text,
-                                          ),
-                                        ),
-                                      ),
+                                      email: emailController.text,
+                                      password: passwordController.text,
                                     )
+                                    .then((value) => approved.toString() ==
+                                            'true'
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  // Approval(
+                                                  //   email: emailController.text,
+                                                  // ),
+                                                  RootAppCust(
+                                                email: emailController.text,
+                                              ),
+                                            ),
+                                          )
+                                        : showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Please wait till your ID is approved by the admin.'),
+                                              );
+                                            }))
                                     .onError(
                                       (error, stackTrace) => showDialog(
                                         context: context,

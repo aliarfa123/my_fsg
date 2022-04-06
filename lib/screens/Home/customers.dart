@@ -72,6 +72,32 @@ class _CustomersPageState extends State<CustomersPage> {
                               title: Text(
                                 nextAdress['name'].toString(),
                               ),
+                              trailing: IconButton(
+                                icon: Icon(Icons.check_circle),
+                                onPressed: () {
+                                  setState(() {
+                                    final db = FirebaseDatabase.instance
+                                        .ref('Customers')
+                                        .child(key);
+                                    db.update({'Approved': 'true'});
+                                    final dbs = FirebaseDatabase.instance.ref(
+                                      nextAdress['email']
+                                          .toString()
+                                          .replaceAll('.com', ''),
+                                    );
+
+                                    dbs.update({'Approved': 'true'}).then(
+                                        (value) => showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title:
+                                                    Text('Customer approved'),
+                                              );
+                                            }));
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),

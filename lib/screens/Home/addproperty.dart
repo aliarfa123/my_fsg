@@ -335,6 +335,23 @@ class _AddPropertyState extends State<AddProperty> {
                     .child('Tel')
                     .set(telController.text);
                 putImage(pushKey);
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        content: Text('Form Filled Successfully'),
+                      );
+                    });
+                setState(() {
+                  adressController.clear();
+                  descController.clear();
+                  contactController.clear();
+                  emailController.clear();
+                  nameController.clear();
+                  telController.clear();
+                  notesController.clear();
+                  _image = null;
+                });
               },
               child: Container(
                 decoration: BoxDecoration(
