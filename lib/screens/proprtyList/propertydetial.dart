@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_fsg/screens/Home/realestate.dart';
-import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/screens/proprtyList/ElectricMeter.dart';
 import 'package:my_fsg/screens/proprtyList/noteslist.dart';
 import 'package:my_fsg/screens/proprtyList/pdf.dart';
@@ -249,7 +247,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
               },
               child: GestureDetector(
                 onTap: () {
-                  launch('gmail.com');
+                  launch('http://www.gmail.com');
                 },
                 child: Container(
                   width: size.width * 0.4,
