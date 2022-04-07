@@ -14,17 +14,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    readData();
+    super.initState();
+  }
+
   String? searchKey;
   Stream? streamQuery;
   readData() async {
     Query databaseref = FirebaseDatabase.instance
         .ref('Addresses')
         .orderByKey()
-        .orderByChild('Adress');
+        .orderByChild('Address');
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      print(data);
-      setState(() {});
+      print(
+        '____________' + data.toString(),
+      );
     });
   }
 

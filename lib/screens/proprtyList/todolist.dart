@@ -145,8 +145,12 @@ class _ToDoListState extends State<ToDoList> {
                   alignment: Alignment.bottomRight,
                   child: InkWell(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AddToDo()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddToDo(
+                                    address: widget.title,
+                                  )));
                     },
                     child: Padding(
                       padding: EdgeInsets.all(16),
@@ -257,25 +261,25 @@ class _ToDoListState extends State<ToDoList> {
                     //   ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => AddToDo()));
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Container(
-                        width: 60,
-                        child: Image(
-                          image: AssetImage('assets/images/add_icon.png'),
-                          color: primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: InkWell(
+                //     onTap: () {
+                //       Navigator.push(context,
+                //           MaterialPageRoute(builder: (context) => AddToDo()));
+                //     },
+                //     child: Padding(
+                //       padding: EdgeInsets.all(16),
+                //       child: Container(
+                //         width: 60,
+                //         child: Image(
+                //           image: AssetImage('assets/images/add_icon.png'),
+                //           color: primary,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

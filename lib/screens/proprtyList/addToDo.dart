@@ -5,14 +5,17 @@ import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 class AddToDo extends StatefulWidget {
-  const AddToDo({Key? key}) : super(key: key);
+  var address;
+  AddToDo({Key? key, this.address}) : super(key: key);
 
   @override
   State<AddToDo> createState() => _AddToDoState();
 }
 
 class _AddToDoState extends State<AddToDo> {
-  String? title;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descController = TextEditingController();
+  TextEditingController dateController = TextEditingController();
   DateTime selectedDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -99,11 +102,7 @@ class _AddToDoState extends State<AddToDo> {
               children: [
                 const SizedBox(height: 20.0),
                 TextFormField(
-                  // onChanged: (value) async {
-                  //   SharedPreferences prefs =
-                  //       await SharedPreferences.getInstance();
-                  //   prefs.setString('title', value);
-                  // },
+                  controller: titleController,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabledBorder: OutlineInputBorder(
@@ -123,6 +122,7 @@ class _AddToDoState extends State<AddToDo> {
                 ),
                 const SizedBox(height: 20.0),
                 TextFormField(
+                  controller: descController,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabledBorder: OutlineInputBorder(
@@ -142,6 +142,7 @@ class _AddToDoState extends State<AddToDo> {
                 ),
                 const SizedBox(height: 20.0),
                 TextFormField(
+                  controller: dateController,
                   decoration: InputDecoration(
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabledBorder: OutlineInputBorder(
@@ -212,7 +213,7 @@ class _AddToDoState extends State<AddToDo> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ToDoList(title: title),
+                        builder: (context) => ToDoList(),
                       ),
                     );
                   },
