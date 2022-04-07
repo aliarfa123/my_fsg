@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -80,8 +79,8 @@ class _SignUpState extends State<SignUp> {
     dynamic tel,
     String name,
   ) async {
-    DatabaseReference ref =
-        FirebaseDatabase.instance.ref(email.toString().replaceAll('.com', ''));
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref(email.toString().replaceAll('.com', '').replaceAll('"', ''));
     await ref.set({
       'email': email,
       "telephone": tel,
@@ -304,7 +303,7 @@ class _SignUpState extends State<SignUp> {
                               onTap: () {
                                 String pushKey = db.push().key.toString();
                                 if (emailController.text.contains('@') &&
-                                    emailController.text.contains('.com') &&
+                                    // emailController.text.contains('.com') &&
                                     nameController.text.isNotEmpty &&
                                     passwordController.text ==
                                         confirmPass.text &&

@@ -294,6 +294,15 @@ class _AddPropertyState extends State<AddProperty> {
                 ),
               ),
             ),
+            Container(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "Add To Do's",
+                style: TextStyle(
+                  fontSize: 25,
+                ),
+              ),
+            ),
             GestureDetector(
               onTap: () {
                 if (adressController.text.isNotEmpty &&

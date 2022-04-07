@@ -3,6 +3,7 @@ import 'package:my_fsg/screens/proprtyList/addToDo.dart';
 import 'package:my_fsg/screens/proprtyList/propertydetial.dart';
 import 'package:my_fsg/theme/colors.dart';
 
+// ignore: must_be_immutable
 class ToDoList extends StatefulWidget {
   var title;
   ToDoList({Key? key, this.title}) : super(key: key);
@@ -27,13 +28,6 @@ class _ToDoListState extends State<ToDoList> {
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => PropertyDetail(
-              //               address: 'House # 12345, St # 88, Sec # 7....',
-              //               image: 'assets/images/house3.png',
-              //             )));
             },
             child: Icon(
               Icons.arrow_back,
@@ -145,33 +139,6 @@ class _ToDoListState extends State<ToDoList> {
                           ],
                         ),
                       ),
-                    // if (valueFourth == false && widget.title != null)
-                    //   Padding(
-                    //     padding: const EdgeInsets.all(8.0),
-                    //     child: Row(
-                    //       children: [
-                    //         Checkbox(
-                    //           onChanged: (value) {
-                    //             setState(() {
-                    //               this.valueFourth = value!;
-                    //             });
-                    //           },
-                    //           checkColor: Colors.white,
-                    //           activeColor: primary,
-                    //           value: this.valueFourth,
-                    //           // onChanged: (bool value) {
-                    //           //   setState(() {
-                    //           //     this.valuefirst = value;
-                    //           //   });
-                    //           // },
-                    //         ),
-                    //         // Text(
-                    //         //   widget.title,
-                    //         //   style: TextStyle(fontSize: 20),
-                    //         // ),
-                    //       ],
-                    //     ),
-                    //   ),
                   ],
                 ),
                 Align(
