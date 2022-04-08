@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
@@ -13,6 +14,33 @@ class AddToDo extends StatefulWidget {
 }
 
 class _AddToDoState extends State<AddToDo> {
+  String? address;
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      address = widget.address.toString();
+    });
+  }
+
+  setData(
+    String title,
+    dynamic desc,
+    String date,
+    String pushKey,
+  ) async {
+    DatabaseReference ref = FirebaseDatabase.instance
+        .ref('To Do')
+        .child(address.toString())
+        .child(pushKey);
+    await ref.set({
+      'Title': title,
+      "Desc": desc,
+      "Date": date,
+      "Approved": 'false',
+    });
+  }
+
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -210,12 +238,16 @@ class _AddToDoState extends State<AddToDo> {
                 const SizedBox(height: 20.0),
                 InkWell(
                   onTap: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ToDoList(),
-                      ),
-                    );
+                    DatabaseReference db = FirebaseDatabase.instance.ref();
+                    String pushKey = db.push().key.toString();
+                    setData(titleController.text, descController.text,
+                        selectedDate.toString(), pushKey);
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => ToDoList(),
+                    //   ),
+                    // );
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.075,
