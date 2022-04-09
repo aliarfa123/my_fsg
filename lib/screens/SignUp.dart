@@ -14,8 +14,10 @@ import 'bottomNavBar2.dart';
 // ignore: must_be_immutable
 class SignUp extends StatefulWidget {
   bool admin;
+  bool back;
   bool cust;
-  SignUp({Key? key, this.admin = false, this.cust = true}) : super(key: key);
+  SignUp({Key? key, this.admin = false, this.cust = true, this.back = false})
+      : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -116,22 +118,55 @@ class _SignUpState extends State<SignUp> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: size.height * 0.1,
-            ),
+            if (widget.back == true)
+              Row(
+                children: [
+                  SafeArea(
+                      child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  )),
+                ],
+              )
+            else
+              Container(),
+            if (widget.back == true)
+              SizedBox(
+                height: size.height * 0.04,
+              )
+            else
+              SizedBox(
+                height: size.height * 0.1,
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  child: Text(
-                    'Sign Up',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: primary,
-                        fontSize: 40.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+                if (widget.back == true)
+                  Container(
+                    child: Text(
+                      'Add Customer',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: primary,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+                else
+                  Container(
+                    child: Text(
+                      'Sign Up',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: primary,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
               ],
             ),
             SizedBox(
@@ -389,37 +424,44 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ],
                         ),
-                        Text(
-                          "Already Have account?",
-                          style: TextStyle(fontSize: 15),
-                        ),
+                        if (widget.back == true)
+                          Container()
+                        else
+                          Text(
+                            "Already Have account?",
+                            style: TextStyle(fontSize: 15),
+                          ),
                         // const SizedBox(height: 15.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MyLogin(
-                                      admin: widget.admin,
-                                      cust: widget.cust,
+                        if (widget.back == true)
+                          Container()
+                        else
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MyLogin(
+                                        admin: widget.admin,
+                                        cust: widget.cust,
+                                      ),
                                     ),
+                                  );
+                                },
+                                child: Text(
+                                  "LogIn",
+                                  style: TextStyle(
+                                    color: primary,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              },
-                              child: Text(
-                                "LogIn",
-                                style: TextStyle(
-                                  color: primary,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+
                         const SizedBox(height: 20.0),
                       ],
                     ),

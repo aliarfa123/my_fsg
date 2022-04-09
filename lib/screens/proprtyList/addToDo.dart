@@ -1,10 +1,10 @@
-import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
-import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
 
+// ignore: must_be_immutable
 class AddToDo extends StatefulWidget {
   var address;
   AddToDo({Key? key, this.address}) : super(key: key);
@@ -14,6 +14,8 @@ class AddToDo extends StatefulWidget {
 }
 
 class _AddToDoState extends State<AddToDo> {
+  firebase_storage.FirebaseStorage storage =
+      firebase_storage.FirebaseStorage.instance;
   String? address;
   @override
   void initState() {
@@ -47,10 +49,11 @@ class _AddToDoState extends State<AddToDo> {
   DateTime selectedDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
@@ -105,9 +108,6 @@ class _AddToDoState extends State<AddToDo> {
         error = e.toString();
       }
 
-      // If the widget was removed from the tree while the asynchronous platform
-      // message was in flight, we want to discard the reply rather than calling
-      // setState to update our non-existent appearance.
       if (!mounted) return;
 
       setState(() {
