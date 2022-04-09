@@ -87,6 +87,7 @@ class _SignUpState extends State<SignUp> {
       'email': email,
       "telephone": tel,
       "name": name,
+      "Approved": 'false',
     });
   }
 

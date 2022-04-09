@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 // ignore: must_be_immutable
@@ -237,17 +238,22 @@ class _AddToDoState extends State<AddToDo> {
                 ),
                 const SizedBox(height: 20.0),
                 InkWell(
-                  onTap: () async {
+                  onTap: () {
                     DatabaseReference db = FirebaseDatabase.instance.ref();
                     String pushKey = db.push().key.toString();
                     setData(titleController.text, descController.text,
                         selectedDate.toString(), pushKey);
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => ToDoList(),
-                    //   ),
-                    // );
+                    setState(() {
+                      titleController.clear();
+                      descController.clear();
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Added Successfully'),
+                            );
+                          });
+                    });
                   },
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.075,
