@@ -1,11 +1,6 @@
-import 'dart:io';
-import 'package:printing/printing.dart';
+import 'package:my_fsg/screens/proprtyList/widgetpdf.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 
 // ignore: must_be_immutable
 class GeneratePDF extends StatefulWidget {
@@ -30,16 +25,12 @@ class GeneratePDF extends StatefulWidget {
 }
 
 class _GeneratePDFState extends State<GeneratePDF> {
-  final netImage = NetworkImage('https://www.nfet.net/nfet.jpg');
-
-  final pdf = pw.Document();
-  @override
-  void initState() {
-    // TODO: implement initState
-    setState(() {
-      var networkImg = widget.image2;
-    });
-  }
+  // @override
+  // void initState() {
+  //   setState(() {
+  //     var networkImg = widget.image2;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -173,77 +164,5 @@ class _GeneratePDFState extends State<GeneratePDF> {
         ],
       ),
     );
-  }
-}
-
-class PdfApi {
-  static Future<File> generateImage(
-      String img, address, name, contact, tel, email) async {
-    final pdf = pw.Document();
-    final netImage = await networkImage(img);
-    pdf.addPage(pw.Page(
-        pageFormat: PdfPageFormat.a4,
-        build: (pw.Context context) {
-          return pw.Column(
-              mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                pw.Container(
-                  // width: 500,
-                  height: 300,
-                  child: pw.Image(netImage),
-                ),
-                pw.Text(
-                  'Adress:  ' + address.toString(),
-                  style: pw.TextStyle(
-                    fontSize: 30,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.Text(
-                  'Name:    ' + name.toString(),
-                  style: pw.TextStyle(
-                    fontSize: 30,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.Text(
-                  'Contact: ' + contact.toString(),
-                  style: pw.TextStyle(
-                    fontSize: 30,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.Text(
-                  'Tel:     ' + tel.toString(),
-                  style: pw.TextStyle(
-                    fontSize: 30,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-                pw.Text(
-                  'Email:   ' + email.toString(),
-                  style: pw.TextStyle(
-                    fontSize: 30,
-                    fontWeight: pw.FontWeight.bold,
-                  ),
-                ),
-              ]); // Center
-        }));
-    return saveDocument(name: 'MyFsg.pdf', pdf: pdf);
-  }
-
-  static Future<File> saveDocument(
-      {required String name, required pw.Document pdf}) async {
-    final bytes = await pdf.save();
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/$name');
-    await file.writeAsBytes(bytes);
-    return file;
-  }
-
-  static Future openFile(File file) async {
-    final url = file.path;
-    await OpenFile.open(url);
   }
 }

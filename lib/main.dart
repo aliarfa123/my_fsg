@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'AnekTamil',
         primaryColor: primary,
       ),
-      home: SelectionPage(),
+      home: RootApp(),
       debugShowCheckedModeBanner: false,
     );
   }
