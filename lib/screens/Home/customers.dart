@@ -11,6 +11,7 @@ class CustomersPage extends StatefulWidget {
 }
 
 class _CustomersPageState extends State<CustomersPage> {
+  var approved = 'false';
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -74,13 +75,22 @@ class _CustomersPageState extends State<CustomersPage> {
                                 nextAdress['name'].toString(),
                               ),
                               trailing: IconButton(
-                                icon: Icon(Icons.check_circle),
+                                icon: Icon(
+                                  Icons.check_circle,
+                                  color: nextAdress['Approved'].toString() ==
+                                          'true'
+                                      ? primary
+                                      : Colors.grey,
+                                ),
                                 onPressed: () {
                                   setState(() {
                                     final db = FirebaseDatabase.instance
                                         .ref('Customers')
                                         .child(key);
-                                    db.update({'Approved': 'true'});
+
+                                    db.update(
+                                      {'Approved': 'true'},
+                                    );
                                     final dbs = FirebaseDatabase.instance.ref(
                                       nextAdress['email']
                                           .toString()
@@ -88,14 +98,16 @@ class _CustomersPageState extends State<CustomersPage> {
                                     );
 
                                     dbs.update({'Approved': 'true'}).then(
-                                        (value) => showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title:
-                                                    Text('Customer approved'),
-                                              );
-                                            }));
+                                        (value) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Customer approved'),
+                                          );
+                                        },
+                                      );
+                                    });
                                   });
                                 },
                               ),

@@ -35,7 +35,6 @@ class _AddPropertyState extends State<AddProperty> {
 
   putImage(String pushKey) async {
     String imageurl;
-    // if (_image == null) return;
     final destination = 'Property';
     final ref = firebase_storage.FirebaseStorage.instance
         .ref(destination)

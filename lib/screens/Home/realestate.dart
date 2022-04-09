@@ -11,29 +11,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    readData();
-  }
-
   String? searchKey;
   Stream? streamQuery;
   var data1;
-  readData() {
-    Query databaseref =
-        FirebaseDatabase.instance.ref('Addresses').orderByChild('Email');
+  // readData() {
+  //   Query databaseref =
+  //       FirebaseDatabase.instance.ref('Addresses').orderByChild('Email');
 
-    databaseref.onValue.listen((DatabaseEvent event) {
-      final data = event.snapshot.value;
-      setState(() {
-        data1 = data;
-      });
-      print(
-        data,
-      );
-    });
-  }
+  //   databaseref.onValue.listen((DatabaseEvent event) {
+  //     final data = event.snapshot.value;
+  //     setState(() {
+  //       data1 = data;
+  //     });
+  //     print(
+  //       data,
+  //     );
+  //   });
+  // }
 
   Map<String, dynamic>? addressSearch;
   List addresses = [];
