@@ -74,7 +74,13 @@ class _InProgressState extends State<InProgress> {
                                         nextAdress['Title'].toString(),
                                       ),
                                       trailing: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          var db = FirebaseDatabase.instance
+                                              .ref("To Do")
+                                              .child(widget.title)
+                                              .child(key);
+                                          db.update({'Approved': 'true'});
+                                        },
                                         child: Icon(
                                           Icons.check_box_outline_blank,
                                         ),

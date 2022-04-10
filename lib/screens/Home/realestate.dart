@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:my_fsg/theme/colors.dart';
 import '../proprtyList/propertydetial.dart';
 
@@ -14,37 +15,23 @@ class _HomePageState extends State<HomePage> {
   String? searchKey;
   Stream? streamQuery;
   var data1;
-  // readData() {
-  //   Query databaseref =
-  //       FirebaseDatabase.instance.ref('Addresses').orderByChild('Email');
+  readData() {
+    Query databaseref = FirebaseDatabase.instance.ref('Addresses').orderByKey();
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
 
-  //   databaseref.onValue.listen((DatabaseEvent event) {
-  //     final data = event.snapshot.value;
-  //     setState(() {
-  //       data1 = data;
-  //     });
-  //     print(
-  //       data,
-  //     );
-  //   });
-  // }
+      setState(() {
+        data1 = data;
+      });
+      print(
+        data1,
+      );
+    });
+  }
 
   Map<String, dynamic>? addressSearch;
   List addresses = [];
   var address;
-
-  // readData() async {
-  //   Stream<DatabaseEvent> databaseref =
-  //       FirebaseDatabase.instance.ref('Addresses').orderByKey().onValue;
-  // databaseref.onValue.listen((DatabaseEvent event) {
-  //   final data = event.snapshot.value;
-  //   print(data);
-  //   setState(() {
-  //     address = data;
-  //   });
-  //   return address;
-  // });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,43 +49,6 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: [
-          // Container(
-          //   margin: EdgeInsets.symmetric(vertical: 10),
-          //   padding: EdgeInsets.symmetric(
-          //     horizontal: 20,
-          //   ),
-          //   width: size.width * 0.95,
-          //   decoration: BoxDecoration(
-          //     border: Border.all(color: primary),
-          //     color: Colors.white,
-          //     borderRadius: BorderRadius.circular(29),
-          //   ),
-          //   child: TextField(
-          //     onChanged: ((value) {
-          //       setState(() {
-          //         searchKey = value;
-          //         streamQuery = FirebaseDatabase.instance
-          //             .ref('Addresses')
-          //             .orderByKey()
-          //             .onValue;
-          //       });
-          //     }),
-          //     style: TextStyle(color: primary),
-          //     cursorColor: primary,
-          //     decoration: InputDecoration(
-          //       icon: Icon(
-          //         Icons.search,
-          //         color: primary,
-          //       ),
-          //       hintText: 'Search',
-          //       // hintStyle: TextStyle(
-          //       //   color: primary,
-          //       // ),
-          //       border: InputBorder.none,
-          //     ),
-          //   ),
-          // ),
-
           Expanded(
             child: StreamBuilder(
               stream: FirebaseDatabase.instance
@@ -118,10 +68,13 @@ class _HomePageState extends State<HomePage> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              // setState(() {
-                              //   addressSearch = nextAdress;
-                              //   print(addressSearch);
-                              // });
+                              // readData();
+
+                              print(address);
+                              setState(() {
+                                addressSearch = nextAdress;
+                                print(addressSearch);
+                              });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
