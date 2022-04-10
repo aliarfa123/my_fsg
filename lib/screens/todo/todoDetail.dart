@@ -113,24 +113,37 @@ class _ToDoDetailState extends State<ToDoDetail> {
                 ),
               ],
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(
-                  newList.length,
-                  (index) => Container(
-                    height: 150,
-                    width: 150,
-                    child: Image(
-                      image: NetworkImage(
-                        newList[index],
+            SizedBox(
+              height: 20,
+            ),
+            if (newList.isNotEmpty)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: List.generate(
+                    newList.length,
+                    (index) => Container(
+                      height: 150,
+                      width: 150,
+                      child: Image(
+                        image: NetworkImage(
+                          newList[index],
+                        ),
                       ),
                     ),
                   ),
                 ),
+              )
+            else
+              Center(
+                child: Container(
+                  height: 150,
+                  width: 150,
+                  child: CircularProgressIndicator(
+                    color: primary,
+                  ),
+                ),
               ),
-            ),
-
             // Expanded(
             //   child: StreamBuilder(
             //     stream: FirebaseDatabase.instance

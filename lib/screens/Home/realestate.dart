@@ -17,6 +17,10 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     readData();
     readImage();
+    readName();
+    readContact();
+    readEmail();
+    readTel();
   }
 
   String? searchKey;
@@ -80,7 +84,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(imageList);
+      print(nameList);
     });
   }
 
@@ -100,7 +104,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(imageList);
+      print(emailList);
     });
   }
 
@@ -120,7 +124,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(imageList);
+      print(contactList);
     });
   }
 
@@ -140,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(imageList);
+      print(telList);
     });
   }
 
@@ -220,28 +224,45 @@ class _HomePageState extends State<HomePage> {
               newDataList.length,
               (index) => Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                        )
-                      ]),
-                  height: size.height * 0.11,
-                  child: Center(
-                    child: ListTile(
-                      leading: Image(
-                        image: NetworkImage(
-                          imageList[index],
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PropertyDetail(
+                          contact: contactList[index].toString(),
+                          email: emailList[index].toString(),
+                          name: nameList[index].toString(),
+                          tel: telList[index].toString(),
+                          image: imageList[index].toString(),
+                          address: newList[index].toString(),
                         ),
                       ),
-                      title: Text(
-                        newDataList[index],
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            blurRadius: 4,
+                            offset: Offset(0, 4),
+                          )
+                        ]),
+                    height: size.height * 0.11,
+                    child: Center(
+                      child: ListTile(
+                        leading: Image(
+                          image: NetworkImage(
+                            imageList[index],
+                          ),
+                        ),
+                        title: Text(
+                          newDataList[index],
+                        ),
                       ),
                     ),
                   ),

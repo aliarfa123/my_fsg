@@ -289,13 +289,16 @@ class _AddToDoState extends State<AddToDo> {
                     setState(() {
                       titleController.clear();
                       descController.clear();
+                      imagefiles = null;
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('Added Successfully'),
                             );
-                          });
+                          }).then(
+                        (value) => Navigator.pop(context),
+                      );
                     });
                   },
                   child: Container(

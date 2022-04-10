@@ -16,12 +16,12 @@ class PropertyDetail extends StatefulWidget {
   var address;
   PropertyDetail({
     Key? key,
-    required this.image,
-    required this.address,
-    required this.name,
-    required this.email,
-    required this.contact,
-    required this.tel,
+    this.image,
+    this.address,
+    this.name,
+    this.email,
+    this.contact,
+    this.tel,
   }) : super(key: key);
 
   @override
