@@ -12,22 +12,53 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController search = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    readData();
+  }
+
   String? searchKey;
   Stream? streamQuery;
+  List newList = [];
   var data1;
+  Map<dynamic, dynamic>? p1;
   readData() {
-    Query databaseref = FirebaseDatabase.instance.ref('Addresses').orderByKey();
+    DatabaseReference databaseref = FirebaseDatabase.instance.ref('Addresses');
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-
       setState(() {
         data1 = data;
+        p1 = data1;
       });
-      print(
-        data1,
-      );
+      p1!.forEach((key, values) {
+        setState(() {
+          newList.add(values['Address']);
+        });
+      });
+      setState(() {
+        newDataList = newList;
+      });
+      // print(newList);
+
+      print(newDataList);
     });
   }
+
+  List newDataList = [];
+  // onItemChanged(String value) {
+  //   setState(() {
+  //     newDataList = newList
+  //         .where((string) => string.toLowerCase().contains(value.toLowerCase()))
+  //         .toList();
+  //   });
+  // }
+  // searchAddress(String query) {
+  //   setState(() {
+
+  //   });
+  // }
 
   Map<String, dynamic>? addressSearch;
   List addresses = [];
@@ -36,7 +67,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -70,11 +100,11 @@ class _HomePageState extends State<HomePage> {
                             onTap: () {
                               // readData();
 
-                              print(address);
-                              setState(() {
-                                addressSearch = nextAdress;
-                                print(addressSearch);
-                              });
+                              // print(address);
+                              // setState(() {
+                              //   addressSearch = nextAdress;
+                              //   print(addressSearch);
+                              // });
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -136,15 +166,16 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(29),
                       ),
                       child: TextField(
-                        onChanged: ((value) {
-                          setState(() {
-                            searchKey = value;
-                            streamQuery = FirebaseDatabase.instance
-                                .ref('Addresses')
-                                .orderByKey()
-                                .onValue;
-                          });
-                        }),
+                        controller: search,
+                        // onChanged: (value) {
+                        //   setState(() {
+                        //     newDataList = newList
+                        //         .where((string) => string
+                        //             .toLowerCase()
+                        //             .contains(value.toLowerCase()))
+                        //         .toList();
+                        //   });
+                        // },
                         style: TextStyle(color: primary),
                         cursorColor: primary,
                         decoration: InputDecoration(

@@ -35,7 +35,7 @@ dependencies:
   firebase_storage: ^10.2.9
   flutter:
     sdk: flutter
-  image_picker: ^0.7.2
+  image_picker: ^0.8.5
   multi_image_picker2: ^5.0.2
   url_launcher: ^6.0.20
   pdf: ^3.7.3

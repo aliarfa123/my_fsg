@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:image_picker/image_picker.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:my_fsg/screens/proprtyList/todolist.dart';
 import 'package:my_fsg/theme/colors.dart';
@@ -15,6 +18,48 @@ class AddToDo extends StatefulWidget {
 }
 
 class _AddToDoState extends State<AddToDo> {
+  final ImagePicker imgpicker = ImagePicker();
+  List<XFile>? imagefiles;
+  List<File> images = [];
+  DatabaseReference db = FirebaseDatabase.instance.ref();
+  openImages() async {
+    try {
+      var pickedfiles = await imgpicker.pickMultiImage();
+      //you can use ImageCourse.camera for Camera capture
+      if (pickedfiles != null) {
+        imagefiles = pickedfiles;
+        setState(() {});
+      } else {
+        print("No image is selected.");
+      }
+    } catch (e) {
+      print("error while picking file.");
+    }
+  }
+
+  putImage(List<XFile> image_list, String pushKey) async {
+    for (int i = 0; i <= image_list.length; i++) {
+      String imageurl;
+      final destination = 'To Do/${address}';
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref(destination)
+          .child(image_list[i].name);
+      File imageFile = File(image_list[i].path);
+      firebase_storage.UploadTask uploadTask = ref.putFile(imageFile);
+      await uploadTask.whenComplete(() async {
+        imageurl = await uploadTask.snapshot.ref.getDownloadURL();
+        db
+            .child('To Do')
+            .child(address.toString())
+            .child(pushKey)
+            .child('Images')
+            .push()
+            .set(imageurl);
+        print(imageurl);
+      });
+    }
+  }
+
   firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
   String? address;
@@ -62,60 +107,60 @@ class _AddToDoState extends State<AddToDo> {
     }
   }
 
-  List<Asset> images = <Asset>[];
+  // List<Asset> images = <Asset>[];
   String _error = 'No Error Dectected';
 
-  Widget buildGridView() {
-    return GridView.count(
-      crossAxisCount: 3,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        return Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: AssetThumb(
-            asset: asset,
-            width: 300,
-            height: 300,
-          ),
-        );
-      }),
-    );
-  }
+  // Widget buildGridView() {
+  //   return GridView.count(
+  //     crossAxisCount: 3,
+  //     children: List.generate(images.length, (index) {
+  //       Asset asset = images[index];
+  //       return Padding(
+  //         padding: const EdgeInsets.all(6.0),
+  //         child: AssetThumb(
+  //           asset: asset,
+  //           width: 300,
+  //           height: 300,
+  //         ),
+  //       );
+  //     }),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
-    Future<void> loadAssets() async {
-      List<Asset> resultList = <Asset>[];
-      String error = 'No Error Detected';
+    // Future<void> loadAssets() async {
+    //   List<Asset> resultList = <Asset>[];
+    //   String error = 'No Error Detected';
 
-      try {
-        resultList = await MultiImagePicker.pickImages(
-          maxImages: 10,
-          enableCamera: true,
-          selectedAssets: images,
-          cupertinoOptions: CupertinoOptions(
-            takePhotoIcon: "chat",
-            doneButtonTitle: "Fatto",
-          ),
-          materialOptions: MaterialOptions(
-            actionBarColor: "#28c662",
-            actionBarTitle: "My FSG",
-            allViewTitle: "All Photos",
-            useDetailsView: false,
-            selectCircleStrokeColor: "#28c662",
-          ),
-        );
-      } on Exception catch (e) {
-        error = e.toString();
-      }
+    //   try {
+    //     resultList = await MultiImagePicker.pickImages(
+    //       maxImages: 10,
+    //       enableCamera: true,
+    //       selectedAssets: images,
+    //       cupertinoOptions: CupertinoOptions(
+    //         takePhotoIcon: "chat",
+    //         doneButtonTitle: "Fatto",
+    //       ),
+    //       materialOptions: MaterialOptions(
+    //         actionBarColor: "#28c662",
+    //         actionBarTitle: "My FSG",
+    //         allViewTitle: "All Photos",
+    //         useDetailsView: false,
+    //         selectCircleStrokeColor: "#28c662",
+    //       ),
+    //     );
+    //   } on Exception catch (e) {
+    //     error = e.toString();
+    //   }
 
-      if (!mounted) return;
+    //   if (!mounted) return;
 
-      setState(() {
-        images = resultList;
-        _error = error;
-      });
-    }
+    //   setState(() {
+    //     images = resultList;
+    //     _error = error;
+    //   });
+    // }
 
     // final format = DateFormat("yyyy-MM-dd");
     return Scaffold(
@@ -206,18 +251,21 @@ class _AddToDoState extends State<AddToDo> {
                       Align(
                         alignment: Alignment.center,
                         child: Center(
-                          child: images.isEmpty
-                              ? Center(
-                                  child: Text(
-                                    "Pick upto 10 Images",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
+                          child: imagefiles != null
+                              ? Wrap(
+                                  children: imagefiles!.map((imageone) {
+                                    return Container(
+                                        child: Card(
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        child: Image.file(File(imageone.path)),
+                                      ),
+                                    ));
+                                  }).toList(),
                                 )
-                              : Expanded(
-                                  child: buildGridView(),
+                              : Container(
+                                  child: Text('Pick Images'),
                                 ),
                         ),
                       ),
@@ -225,7 +273,7 @@ class _AddToDoState extends State<AddToDo> {
                         alignment: Alignment.bottomRight,
                         child: InkWell(
                           onTap: () {
-                            loadAssets();
+                            openImages();
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -241,6 +289,7 @@ class _AddToDoState extends State<AddToDo> {
                   onTap: () {
                     DatabaseReference db = FirebaseDatabase.instance.ref();
                     String pushKey = db.push().key.toString();
+                    putImage(imagefiles!, pushKey);
                     setData(titleController.text, descController.text,
                         selectedDate.toString(), pushKey);
                     setState(() {
