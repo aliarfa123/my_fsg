@@ -9,6 +9,7 @@ import 'package:my_fsg/screens/proprtyList/addToDo.dart';
 import 'package:my_fsg/screens/proprtyList/noteslist.dart';
 import 'package:my_fsg/screens/splash.dart';
 import 'package:my_fsg/screens/todo/send_image.dart';
+import 'package:my_fsg/screens/todo/todoDetail.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'AnekTamil',
         primaryColor: primary,
       ),
-      home: AddToDo(),
+      home: RootApp(),
       debugShowCheckedModeBanner: false,
     );
   }

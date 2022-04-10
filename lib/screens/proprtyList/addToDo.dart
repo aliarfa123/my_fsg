@@ -48,13 +48,7 @@ class _AddToDoState extends State<AddToDo> {
       firebase_storage.UploadTask uploadTask = ref.putFile(imageFile);
       await uploadTask.whenComplete(() async {
         imageurl = await uploadTask.snapshot.ref.getDownloadURL();
-        db
-            .child('To Do')
-            .child(address.toString())
-            .child(pushKey)
-            .child('Images')
-            .push()
-            .set(imageurl);
+        db.child('Images').child(address.toString()).push().set(imageurl);
         print(imageurl);
       });
     }

@@ -1,6 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:my_fsg/theme/colors.dart';
 import '../proprtyList/propertydetial.dart';
 
@@ -21,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   String? searchKey;
   Stream? streamQuery;
-  List newList = [];
+  List<String> newList = [];
   var data1;
   Map<dynamic, dynamic>? p1;
   readData() {
@@ -40,25 +39,18 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         newDataList = newList;
       });
-      // print(newList);
-
       print(newDataList);
     });
   }
 
-  List newDataList = [];
-  // onItemChanged(String value) {
-  //   setState(() {
-  //     newDataList = newList
-  //         .where((string) => string.toLowerCase().contains(value.toLowerCase()))
-  //         .toList();
-  //   });
-  // }
-  // searchAddress(String query) {
-  //   setState(() {
-
-  //   });
-  // }
+  List<String> newDataList = [];
+  onItemChanged(String value) {
+    setState(() {
+      newDataList = newList
+          .where((string) => string.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
 
   Map<String, dynamic>? addressSearch;
   List addresses = [];
