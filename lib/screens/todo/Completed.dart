@@ -71,7 +71,13 @@ class _CompletedState extends State<Completed> {
                                     nextAdress['Title'].toString(),
                                   ),
                                   trailing: InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      var db = FirebaseDatabase.instance
+                                          .ref("To Do")
+                                          .child(widget.title)
+                                          .child(key);
+                                      db.update({'Approved': 'false'});
+                                    },
                                     child: Icon(
                                       Icons.check_box,
                                       color: primary,
