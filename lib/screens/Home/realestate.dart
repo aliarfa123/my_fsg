@@ -179,89 +179,91 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            padding: EdgeInsets.symmetric(
-              horizontal: 20,
-            ),
-            width: size.width * 0.95,
-            decoration: BoxDecoration(
-              border: Border.all(color: primary),
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(29),
-            ),
-            child: TextField(
-              onChanged: onItemChanged,
-              controller: search,
-              // onChanged: (value) {
-              //   setState(() {
-              //     newDataList = newList
-              //         .where((string) => string
-              //             .toLowerCase()
-              //             .contains(value.toLowerCase()))
-              //         .toList();
-              //   });
-              // },
-              style: TextStyle(color: primary),
-              cursorColor: primary,
-              decoration: InputDecoration(
-                icon: Icon(
-                  Icons.search,
-                  color: primary,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 10),
+              padding: EdgeInsets.symmetric(
+                horizontal: 20,
+              ),
+              width: size.width * 0.95,
+              decoration: BoxDecoration(
+                border: Border.all(color: primary),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(29),
+              ),
+              child: TextField(
+                onChanged: onItemChanged,
+                controller: search,
+                // onChanged: (value) {
+                //   setState(() {
+                //     newDataList = newList
+                //         .where((string) => string
+                //             .toLowerCase()
+                //             .contains(value.toLowerCase()))
+                //         .toList();
+                //   });
+                // },
+                style: TextStyle(color: primary),
+                cursorColor: primary,
+                decoration: InputDecoration(
+                  icon: Icon(
+                    Icons.search,
+                    color: primary,
+                  ),
+                  hintText: 'Search',
+                  // hintStyle: TextStyle(
+                  //   color: primary,
+                  // ),
+                  border: InputBorder.none,
                 ),
-                hintText: 'Search',
-                // hintStyle: TextStyle(
-                //   color: primary,
-                // ),
-                border: InputBorder.none,
               ),
             ),
-          ),
-          Column(
-            children: List.generate(
-              newDataList.length,
-              (index) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PropertyDetail(
-                          contact: contactList[index].toString(),
-                          email: emailList[index].toString(),
-                          name: nameList[index].toString(),
-                          tel: telList[index].toString(),
-                          image: imageList[index].toString(),
-                          address: newList[index].toString(),
-                        ),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                          )
-                        ]),
-                    height: size.height * 0.11,
-                    child: Center(
-                      child: ListTile(
-                        leading: Image(
-                          image: NetworkImage(
-                            imageList[index],
+            Column(
+              children: List.generate(
+                newDataList.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PropertyDetail(
+                            contact: contactList[index].toString(),
+                            email: emailList[index].toString(),
+                            name: nameList[index].toString(),
+                            tel: telList[index].toString(),
+                            image: imageList[index].toString(),
+                            address: newList[index].toString(),
                           ),
                         ),
-                        title: Text(
-                          newDataList[index],
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                            )
+                          ]),
+                      height: size.height * 0.11,
+                      child: Center(
+                        child: ListTile(
+                          leading: Image(
+                            image: NetworkImage(
+                              imageList[index],
+                            ),
+                          ),
+                          title: Text(
+                            newDataList[index],
+                          ),
                         ),
                       ),
                     ),
@@ -269,93 +271,93 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-          ),
-          // Expanded(
-          //   child: StreamBuilder(
-          //     stream: FirebaseDatabase.instance
-          //         .ref('Addresses')
-          //         .orderByKey()
-          //         .onValue,
-          //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          //       final tilesList = <Widget>[];
-          //       if (snapshot.hasData) {
-          //         final address = Map<String, dynamic>.from(
-          //             (snapshot.data!).snapshot.value);
-          //         address.forEach((key, value) {
-          //           final nextAdress = Map<String, dynamic>.from(value);
-          //           final adressTile = Padding(
-          //             padding: EdgeInsets.all(9),
-          //             child: Column(
-          //               children: [
-          //                 GestureDetector(
-          //                   onTap: () {
-          //                     // readData();
+            // Expanded(
+            //   child: StreamBuilder(
+            //     stream: FirebaseDatabase.instance
+            //         .ref('Addresses')
+            //         .orderByKey()
+            //         .onValue,
+            //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            //       final tilesList = <Widget>[];
+            //       if (snapshot.hasData) {
+            //         final address = Map<String, dynamic>.from(
+            //             (snapshot.data!).snapshot.value);
+            //         address.forEach((key, value) {
+            //           final nextAdress = Map<String, dynamic>.from(value);
+            //           final adressTile = Padding(
+            //             padding: EdgeInsets.all(9),
+            //             child: Column(
+            //               children: [
+            //                 GestureDetector(
+            //                   onTap: () {
+            //                     // readData();
 
-          //                     // print(address);
-          //                     // setState(() {
-          //                     //   addressSearch = nextAdress;
-          //                     //   print(addressSearch);
-          //                     // });
-          //                     Navigator.push(
-          //                       context,
-          //                       MaterialPageRoute(
-          //                         builder: (context) => PropertyDetail(
-          //                           contact: nextAdress['Contact'].toString(),
-          //                           email: nextAdress['Email'].toString(),
-          //                           name: nextAdress['Name'].toString(),
-          //                           tel: nextAdress['Tel'].toString(),
-          //                           image: nextAdress['image_link'].toString(),
-          //                           address: nextAdress['Address'].toString(),
-          //                         ),
-          //                       ),
-          //                     );
-          //                   },
-          //                   child: Container(
-          //                     decoration: BoxDecoration(
-          //                         color: Colors.white,
-          //                         border: Border.all(color: Colors.grey),
-          //                         borderRadius: BorderRadius.circular(10),
-          //                         boxShadow: [
-          //                           BoxShadow(
-          //                             color: Colors.grey.withOpacity(0.5),
-          //                             blurRadius: 4,
-          //                             offset: Offset(0, 4),
-          //                           )
-          //                         ]),
-          //                     height: size.height * 0.11,
-          //                     child: Center(
-          //                       child: ListTile(
-          //                         leading: Image(
-          //                           image: NetworkImage(
-          //                             nextAdress['image_link'].toString(),
-          //                           ),
-          //                         ),
-          //                         title: Text(
-          //                           nextAdress['Address'].toString(),
-          //                         ),
-          //                       ),
-          //                     ),
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //           );
-          //           tilesList.add(adressTile);
-          //         });
-          //       }
-          //       return Column(
-          //         children: [
-          //           Expanded(
-          //             child: ListView(
-          //               children: tilesList,
-          //             ),
-          //           ),
-          //         ],
-          //       );
-          //     },
-          //   ),
-          // ),
-        ],
+            //                     // print(address);
+            //                     // setState(() {
+            //                     //   addressSearch = nextAdress;
+            //                     //   print(addressSearch);
+            //                     // });
+            //                     Navigator.push(
+            //                       context,
+            //                       MaterialPageRoute(
+            //                         builder: (context) => PropertyDetail(
+            //                           contact: nextAdress['Contact'].toString(),
+            //                           email: nextAdress['Email'].toString(),
+            //                           name: nextAdress['Name'].toString(),
+            //                           tel: nextAdress['Tel'].toString(),
+            //                           image: nextAdress['image_link'].toString(),
+            //                           address: nextAdress['Address'].toString(),
+            //                         ),
+            //                       ),
+            //                     );
+            //                   },
+            //                   child: Container(
+            //                     decoration: BoxDecoration(
+            //                         color: Colors.white,
+            //                         border: Border.all(color: Colors.grey),
+            //                         borderRadius: BorderRadius.circular(10),
+            //                         boxShadow: [
+            //                           BoxShadow(
+            //                             color: Colors.grey.withOpacity(0.5),
+            //                             blurRadius: 4,
+            //                             offset: Offset(0, 4),
+            //                           )
+            //                         ]),
+            //                     height: size.height * 0.11,
+            //                     child: Center(
+            //                       child: ListTile(
+            //                         leading: Image(
+            //                           image: NetworkImage(
+            //                             nextAdress['image_link'].toString(),
+            //                           ),
+            //                         ),
+            //                         title: Text(
+            //                           nextAdress['Address'].toString(),
+            //                         ),
+            //                       ),
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ],
+            //             ),
+            //           );
+            //           tilesList.add(adressTile);
+            //         });
+            //       }
+            //       return Column(
+            //         children: [
+            //           Expanded(
+            //             child: ListView(
+            //               children: tilesList,
+            //             ),
+            //           ),
+            //         ],
+            //       );
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

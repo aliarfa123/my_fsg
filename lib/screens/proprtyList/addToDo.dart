@@ -298,7 +298,7 @@ class _AddToDoState extends State<AddToDo> {
                             );
                           }).then(
                         (value) => Navigator.pop(context),
-                      );
+                        );
                     });
                   },
                   child: Container(

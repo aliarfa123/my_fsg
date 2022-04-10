@@ -26,9 +26,11 @@ class _RootAppState extends State<RootApp> {
 
   Widget getBody() {
     List<Widget> pages = [
-      const AddProperty(),
-      const HomePage(),
-      const CustomersPage(),
+      AddProperty(
+        email: widget.email,
+      ),
+      HomePage(),
+      CustomersPage(),
       MyProfile(
         email: widget.email,
       ),

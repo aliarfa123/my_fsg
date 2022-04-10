@@ -4,10 +4,12 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/theme/colors.dart';
 
 class AddProperty extends StatefulWidget {
-  const AddProperty({Key? key}) : super(key: key);
+  var email;
+  AddProperty({Key? key, this.email}) : super(key: key);
 
   @override
   State<AddProperty> createState() => _AddPropertyState();
@@ -348,7 +350,20 @@ class _AddPropertyState extends State<AddProperty> {
                         return AlertDialog(
                           content: Text('Form Filled Successfully'),
                         );
-                      });
+                      }).then(
+                    ((value) => Future.delayed(const Duration(seconds: 1), () {
+                          setState(() {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RootApp(
+                                  email: widget.email,
+                                ),
+                              ),
+                            );
+                          });
+                        })),
+                  );
                   setState(() {
                     adressController.clear();
                     descController.clear();
