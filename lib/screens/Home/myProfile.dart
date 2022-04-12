@@ -28,7 +28,7 @@ class _MyProfileState extends State<MyProfile> {
         .ref('Sign Up/' + widget.email.toString().replaceAll('.com', ''))
         .child('Logo');
     var url = await ref.getDownloadURL();
-    print(url);
+    //print(url);
     setState(() {
       _url = url;
     });
@@ -39,11 +39,11 @@ class _MyProfileState extends State<MyProfile> {
         .ref(widget.email.toString().replaceAll('.com', '') + '/email');
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      print(data);
+      //print(data);
       setState(() {
         email = data;
       });
-      print(email);
+      //print(email);
       return email;
     });
   }
@@ -53,11 +53,11 @@ class _MyProfileState extends State<MyProfile> {
         .ref(widget.email.toString().replaceAll('.com', '') + '/name');
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      print(data);
+      //print(data);
       setState(() {
         name = data;
       });
-      print(name);
+      //print(name);
       return name;
     });
   }
@@ -96,11 +96,11 @@ class _MyProfileState extends State<MyProfile> {
         .ref(widget.email.toString().replaceAll('.com', '') + '/telephone');
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      print(data);
+      //print(data);
       setState(() {
         tel = data;
       });
-      print(tel);
+      //print(tel);
       return tel;
     });
   }
@@ -140,10 +140,11 @@ class _MyProfileState extends State<MyProfile> {
                 Center(
                   child: CircleAvatar(
                     backgroundColor: Colors.white,
-                    radius: size.height * 0.07,
+                    radius: size.height * 0.064,
                     child: Image(
                       image: NetworkImage(_url),
                       height: size.height * 0.1,
+                      width: size.width * 0.2,
                     ),
                   ),
                 ),

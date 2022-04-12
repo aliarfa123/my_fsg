@@ -45,7 +45,7 @@ class _AddPropertyState extends State<AddProperty> {
     await uploadTask.whenComplete(() async {
       imageurl = await uploadTask.snapshot.ref.getDownloadURL();
       db.child('Addresses').child(pushKey).child('image_link').set(imageurl);
-      print(imageurl);
+      // print(imageurl);
     });
   }
 
@@ -53,7 +53,7 @@ class _AddPropertyState extends State<AddProperty> {
     DatabaseReference databaseref = FirebaseDatabase.instance.ref();
     databaseref.onValue.listen((DatabaseEvent event) {
       final data = event.snapshot.value;
-      print(data);
+      // print(data);
     });
   }
 
@@ -351,13 +351,16 @@ class _AddPropertyState extends State<AddProperty> {
                           content: Text('Form Filled Successfully'),
                         );
                       }).then(
-                    ((value) => Future.delayed(const Duration(seconds: 1), () {
+                    ((value) => Future.delayed(
+                            const Duration(
+                              seconds: 0,
+                            ), () {
                           setState(() {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => RootApp(
-                                  email: widget.email,
+                                  email: widget.email.toString(),
                                 ),
                               ),
                             );

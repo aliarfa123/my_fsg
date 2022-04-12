@@ -15,12 +15,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    readData();
-    readImage();
-    readName();
-    readContact();
-    readEmail();
-    readTel();
+    setState(() {
+      readData();
+      readImage();
+      readName();
+      readContact();
+      readEmail();
+      readTel();
+    });
   }
 
   String? searchKey;
@@ -44,7 +46,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         newDataList = newList;
       });
-      print(newDataList);
+      //print(newDataList);
     });
   }
 
@@ -64,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(imageList);
+      //print(imageList);
     });
   }
 
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(nameList);
+      //print(nameList);
     });
   }
 
@@ -104,7 +106,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(emailList);
+      //print(emailList);
     });
   }
 
@@ -121,10 +123,6 @@ class _HomePageState extends State<HomePage> {
           contactList.add(values['Contact']);
         });
       });
-      // setState(() {
-      //   newDataList = newList;
-      // });
-      print(contactList);
     });
   }
 
@@ -144,7 +142,7 @@ class _HomePageState extends State<HomePage> {
       // setState(() {
       //   newDataList = newList;
       // });
-      print(telList);
+      //print(telList);
     });
   }
 
@@ -222,7 +220,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Column(
               children: List.generate(
-                newDataList.length,
+                imageList.length,
                 (index) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
@@ -257,6 +255,8 @@ class _HomePageState extends State<HomePage> {
                       child: Center(
                         child: ListTile(
                           leading: Image(
+                            fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width * 0.2,
                             image: NetworkImage(
                               imageList[index],
                             ),

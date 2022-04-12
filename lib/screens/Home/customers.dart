@@ -67,6 +67,8 @@ class _CustomersPageState extends State<CustomersPage> {
                           child: Center(
                             child: ListTile(
                               leading: Image(
+                                fit: BoxFit.cover,
+                                width: MediaQuery.of(context).size.width * 0.2,
                                 image: NetworkImage(
                                   nextAdress['image_link'].toString(),
                                 ),

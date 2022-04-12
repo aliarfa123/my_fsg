@@ -29,8 +29,17 @@ class MyApp extends StatelessWidget {
         fontFamily: 'AnekTamil',
         primaryColor: primary,
       ),
-      home: RootApp(),
+      home: SplashScreen(),
+      scrollBehavior: MyBehavior(),
       debugShowCheckedModeBanner: false,
     );
+  }
+}
+
+class MyBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
   }
 }

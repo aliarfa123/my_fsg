@@ -32,7 +32,6 @@ class PdfApi {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(left: 150),
                     width: 500,
                     height: 300,
                     child: Image(netImage),
@@ -44,7 +43,7 @@ class PdfApi {
                         style: pdfStyle,
                       ),
                       Text(
-                        'Name:    ' + name.toString(),
+                        ', Name:    ' + name.toString(),
                         style: pdfStyle,
                       ),
                     ],
