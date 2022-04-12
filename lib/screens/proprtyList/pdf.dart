@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:my_fsg/screens/proprtyList/widgetpdf.dart';
 import 'package:flutter/material.dart';
 import 'package:my_fsg/theme/colors.dart';
@@ -25,6 +26,64 @@ class GeneratePDF extends StatefulWidget {
 }
 
 class _GeneratePDFState extends State<GeneratePDF> {
+  List<String> notesList = [];
+  List<String> toDoList = [];
+  var data1;
+  Map<dynamic, dynamic>? p1;
+
+  Map<dynamic, dynamic>? p2;
+  readNotes() {
+    DatabaseReference databaseref =
+        FirebaseDatabase.instance.ref('Notes').child(
+              widget.address2.toString(),
+            );
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      setState(() {
+        data1 = data;
+        p1 = data1;
+      });
+      p1!.forEach((key, values) {
+        setState(() {
+          notesList.add(values['Title']);
+        });
+      });
+      // setState(() {
+      //   newDataList = newList;
+      // });
+      print(notesList);
+    });
+  }
+
+  readToDo() {
+    DatabaseReference databaseref =
+        FirebaseDatabase.instance.ref('To Do').child(
+              widget.address2.toString(),
+            );
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      setState(() {
+        data1 = data;
+        p2 = data1;
+      });
+      p2!.forEach((key, values) {
+        setState(() {
+          toDoList.add(values['Title']);
+        });
+      });
+      // setState(() {
+      //   newDataList = newList;
+      // });
+      print(toDoList);
+    });
+  }
+
+  @override
+  void initState() {
+    readNotes();
+    readToDo();
+  }
+
   // @override
   // void initState() {
   //   setState(() {
@@ -138,12 +197,15 @@ class _GeneratePDFState extends State<GeneratePDF> {
           InkWell(
             onTap: () async {
               final pdfFile = await PdfApi.generateImage(
-                  widget.image2.toString(),
-                  widget.address2.toString(),
-                  widget.name.toString(),
-                  widget.contact.toString(),
-                  widget.tel.toString(),
-                  widget.email.toString());
+                widget.image2.toString(),
+                widget.address2.toString(),
+                widget.name.toString(),
+                widget.contact.toString(),
+                widget.tel.toString(),
+                widget.email.toString(),
+                notesList,
+                toDoList,
+              );
               PdfApi.openFile(pdfFile);
             },
             child: Container(

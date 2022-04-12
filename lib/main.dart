@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'AnekTamil',
         primaryColor: primary,
       ),
-      home: SplashScreen(),
+      home: RootApp(),
       debugShowCheckedModeBanner: false,
     );
   }
