@@ -28,10 +28,14 @@ class GeneratePDF extends StatefulWidget {
 class _GeneratePDFState extends State<GeneratePDF> {
   List<String> notesList = [];
   List<String> toDoList = [];
+  List<String> dateTime = [];
+  List<String> images = [];
   var data1;
   Map<dynamic, dynamic>? p1;
 
   Map<dynamic, dynamic>? p2;
+  Map<dynamic, dynamic>? p3;
+  Map<dynamic, dynamic>? p4;
   readNotes() {
     DatabaseReference databaseref =
         FirebaseDatabase.instance.ref('Notes').child(
@@ -78,18 +82,60 @@ class _GeneratePDFState extends State<GeneratePDF> {
     });
   }
 
+  readDateTime() {
+    DatabaseReference databaseref =
+        FirebaseDatabase.instance.ref('To Do').child(
+              widget.address2.toString(),
+            );
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      setState(() {
+        data1 = data;
+        p3 = data1;
+      });
+      p3!.forEach((key, values) {
+        setState(() {
+          dateTime.add(values['Date']);
+        });
+      });
+      // setState(() {
+      //   newDataList = newList;
+      // });
+      print(dateTime);
+    });
+  }
+
+  readImages() {
+    DatabaseReference databaseref =
+        FirebaseDatabase.instance.ref('Images').child(
+              widget.address2.toString(),
+            );
+    databaseref.onValue.listen((DatabaseEvent event) {
+      final data = event.snapshot.value;
+      setState(() {
+        data1 = data;
+        p4 = data1;
+      });
+      p4!.forEach((key, values) {
+        setState(() {
+          images.add(values);
+        });
+      });
+      // setState(() {
+      //   newDataList = newList;
+      // });
+      print(images);
+    });
+  }
+
   @override
+  // ignore: must_call_super
   void initState() {
     readNotes();
     readToDo();
+    readDateTime();
+    readImages();
   }
-
-  // @override
-  // void initState() {
-  //   setState(() {
-  //     var networkImg = widget.image2;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -203,8 +249,8 @@ class _GeneratePDFState extends State<GeneratePDF> {
                 widget.contact.toString(),
                 widget.tel.toString(),
                 widget.email.toString(),
-                notesList,
-                toDoList,
+                dateTime[0],
+                images,
               );
               PdfApi.openFile(pdfFile);
             },
@@ -227,4 +273,19 @@ class _GeneratePDFState extends State<GeneratePDF> {
       ),
     );
   }
+}
+
+imagesList(List<dynamic> image) {
+  List.generate(
+    image.length,
+    (index) => Container(
+      child: Image(
+        height: 200,
+        width: 300,
+        image: NetworkImage(
+          image[index],
+        ),
+      ),
+    ),
+  );
 }

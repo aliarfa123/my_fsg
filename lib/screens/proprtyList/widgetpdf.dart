@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:my_fsg/screens/proprtyList/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'package:pdf/pdf.dart';
 import 'dart:io';
@@ -14,209 +15,205 @@ class PdfApi {
     contact,
     tel,
     email,
-    List notes,
-    List toDo,
+    dateTime,
+    List images,
   ) async {
     final pdf = Document();
-    final netImage = await networkImage(img);
-
+    final netImage = await networkImage(images[0]);
     final logoImage = MemoryImage(
       (await rootBundle.load('assets/images/logo.png')).buffer.asUint8List(),
     );
     pdf.addPage(
       MultiPage(
-        pageFormat: PdfPageFormat.a4,
-        margin: EdgeInsets.all(20),
-        build: (Context context) {
-          return <Widget>[
-            Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Image(
-                    logoImage,
-                    height: 100,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Arbeitsscheine',
-                    style: pdfStyle,
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                children: [
-                  Text(
-                    name + ' - ' + address,
-                    style: pdfStyle,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        right: 4,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Date',
-                            style: pdfStyleSmall,
-                          ),
-                          Text(
-                            'date here',
-                            style: pdfStyle,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Time',
-                          style: pdfStyleSmall,
-                        ),
-                        Text(
-                          'time here',
-                          style: pdfStyle,
-                        ),
-                      ],
-                    ),
-                  ]),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        'Customer',
-                        style: pdfStyleSmall,
-                      ),
-                      Text(
-                        name,
-                        style: pdfStyleSmall,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Address',
-                        style: pdfStyleSmall,
-                      ),
-                      Text(
-                        address,
-                        style: pdfStyleSmall,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-              Column(children: [
-                Text(
-                  'Description',
-                  style: pdfStyleSmall,
+          pageFormat: PdfPageFormat.a4,
+          margin: EdgeInsets.all(20),
+          header: (context) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Image(
+                  logoImage,
+                  height: 80,
                 ),
-                Text(
-                  'Description here',
-                  style: pdfStyle,
-                )
-              ]),
-              Row(
-                children: [
-                  Container(
-                    width: 500,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 500,
-                          height: 300,
-                          child: Image(netImage),
+              ],
+            );
+          },
+          build: (Context context) {
+            return <Widget>[
+              Column(children: [
+                Row(
+                  children: [
+                    Text(
+                      'Arbeitsscheine',
+                      style: pdfStyle,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      name + ' - ' + address,
+                      style: pdfStyle,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                          right: 4,
                         ),
-                        Wrap(
+                        child: Column(
                           children: [
                             Text(
-                              'Adress:  ' + address.toString(),
-                              style: pdfStyle,
+                              'Date',
+                              style: pdfStyleSmall,
                             ),
                             Text(
-                              ', Name:    ' + name.toString(),
+                              dateTime.toString().split(' ').first,
                               style: pdfStyle,
                             ),
                           ],
                         ),
-                        Wrap(children: [
+                      ),
+                      SizedBox(width: 20),
+                      Column(
+                        children: [
                           Text(
-                            'Contact: ' + contact.toString(),
-                            style: pdfStyle,
+                            'Time',
+                            style: pdfStyleSmall,
                           ),
                           Text(
-                            ',    Tel:     ' + tel.toString(),
+                            dateTime
+                                .toString()
+                                .split(' ')
+                                .last
+                                .split('.')
+                                .first,
                             style: pdfStyle,
                           ),
-                        ]),
-                        Row(children: [
+                        ],
+                      ),
+                    ]),
+                    Container(
+                      width: 250,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
                           Text(
-                            'Email:   ' + email.toString(),
-                            style: pdfStyle,
+                            'Customer',
+                            style: pdfStyleSmall,
                           ),
-                        ]),
+                          Text(
+                            name,
+                            style: pdfStyleSmall,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Address',
+                            style: pdfStyleSmall,
+                          ),
+                          Wrap(
+                            children: [
+                              Text(
+                                address,
+                                style: pdfStyleSmall,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          'Notes:',
-                          style: pdfStyle,
-                        ),
-                        Column(
-                          children: List.generate(
-                            notes.length,
-                            (index) => Text(
-                              '-' + notes[index],
-                              style: pdfStyleSmall,
-                            ),
-                          ),
+                          'Description',
+                          style: pdfStyleSmall,
                         ),
                         Text(
-                          'To Do List:',
+                          'Description here',
                           style: pdfStyle,
-                        ),
-                        Column(
-                          children: List.generate(
-                            toDo.length,
-                            (index) => Text(
-                              '-' + toDo[index],
-                              style: pdfStyleSmall,
-                            ),
-                          ),
                         )
                       ],
                     ),
+                  ],
+                ),
+                // Container(
+                //   child: Image(netImage),
+                // ),
+                // List.generate(
+                //   images.length,
+                //   (index) => Container(
+                //     height: 200,
+                //     width: 300,
+                //   ),
+                // ),
+
+                Container(
+                  width: 500,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: 500,
+                        height: 300,
+                        child: Image(netImage),
+                      ),
+                    ],
+                  ),
+                ),
+              ])
+            ];
+          },
+          footer: (context) {
+            final text = 'Page ${context.pageNumber} of ${context.pagesCount}';
+            return Column(children: [
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(children: [
+                    Text('Address', style: footerStyle),
+                    Text('Address here for me', style: footerStyleSmall),
+                  ]),
+                  Column(children: [
+                    Text('Contact', style: footerStyle),
+                    Text('Contact for me', style: footerStyleSmall),
+                  ]),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    text,
                   ),
                 ],
               ),
-            ])
-          ];
-        },
-      ),
+            ]);
+          }),
     );
-    return saveDocument(name: 'MyFsg.pdf', pdf: pdf);
+    return saveDocument(name: '$name - $address -ToDo-day.pdf', pdf: pdf);
   }
 
   static Future<File> saveDocument(
@@ -241,4 +238,12 @@ var pdfStyle = TextStyle(
 var pdfStyleSmall = TextStyle(
   // fontWeight: FontWeight.bold,
   fontSize: 20,
+);
+var footerStyle = TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 18,
+);
+var footerStyleSmall = TextStyle(
+  // fontWeight: FontWeight.bold,
+  fontSize: 15,
 );

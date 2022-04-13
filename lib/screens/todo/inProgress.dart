@@ -4,6 +4,7 @@ import 'package:my_fsg/screens/proprtyList/addToDo.dart';
 import 'package:my_fsg/screens/todo/todoDetail.dart';
 import 'package:my_fsg/theme/colors.dart';
 
+// ignore: must_be_immutable
 class InProgress extends StatefulWidget {
   var title;
   InProgress({Key? key, this.title}) : super(key: key);

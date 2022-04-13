@@ -37,12 +37,6 @@ class _PropertyDetailState extends State<PropertyDetail> {
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => RootApp(),
-            //   ),
-            // );
           },
           child: Icon(
             Icons.arrow_back,
