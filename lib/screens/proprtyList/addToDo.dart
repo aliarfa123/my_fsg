@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -298,7 +297,7 @@ class _AddToDoState extends State<AddToDo> {
                             );
                           }).then(
                         (value) => Navigator.pop(context),
-                        );
+                      );
                     });
                   },
                   child: Container(
