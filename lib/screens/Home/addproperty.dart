@@ -91,24 +91,29 @@ class _AddPropertyState extends State<AddProperty> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                controller: adressController,
-                decoration: InputDecoration(
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: adressController,
+                    decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide(color: primary)),
+                      labelText: 'Address',
+                      fillColor: Colors.grey.shade100,
+                      filled: true,
+                      focusColor: primary,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide(color: primary)),
-                  labelText: 'Address',
-                  fillColor: Colors.grey.shade100,
-                  filled: true,
-                  focusColor: primary,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                ),
+                  Text("Please don't use special charachters like # or _ etc.")
+                ],
               ),
             ),
             Padding(
@@ -298,13 +303,14 @@ class _AddPropertyState extends State<AddProperty> {
             GestureDetector(
               onTap: () {
                 if (adressController.text.isNotEmpty &&
-                    nameController.text.isNotEmpty &&
-                    contactController.text.isNotEmpty &&
-                    emailController.text.isNotEmpty &&
-                    telController.text.isNotEmpty &&
-                    notesController.text.isNotEmpty &&
-                    descController.text.isNotEmpty &&
-                    _image != null) {
+                        nameController.text.isNotEmpty &&
+                        contactController.text.isNotEmpty &&
+                        emailController.text.isNotEmpty &&
+                        telController.text.isNotEmpty &&
+                        notesController.text.isNotEmpty &&
+                        descController.text.isNotEmpty
+                    // &&                    _image != null
+                    ) {
                   String pushKey = db.push().key.toString();
                   db
                       .child('Addresses')
@@ -353,10 +359,10 @@ class _AddPropertyState extends State<AddProperty> {
                       }).then(
                     ((value) => Future.delayed(
                             const Duration(
-                              seconds: 0,
+                              seconds: 1,
                             ), () {
                           setState(() {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => RootApp(

@@ -93,6 +93,7 @@ class _PropertyDetailState extends State<PropertyDetail> {
                   MaterialPageRoute(
                     builder: (context) => ToDoList(
                       title: widget.address,
+                      name: widget.name,
                     ),
                   ),
                 );

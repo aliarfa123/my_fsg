@@ -7,8 +7,9 @@ import 'package:my_fsg/theme/colors.dart';
 
 // ignore: must_be_immutable
 class Completed extends StatefulWidget {
+  var name;
   var title;
-  Completed({Key? key, this.title}) : super(key: key);
+  Completed({Key? key, this.title, this.name}) : super(key: key);
 
   @override
   State<Completed> createState() => _CompletedState();
@@ -48,6 +49,7 @@ class _CompletedState extends State<Completed> {
                               date: nextAdress['Date'],
                               desc: nextAdress['Desc'],
                               address: widget.title,
+                              name: widget.name,
                             ),
                           ),
                         );

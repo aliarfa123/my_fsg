@@ -8,8 +8,15 @@ import 'package:my_fsg/theme/colors.dart';
 
 // ignore: must_be_immutable
 class ToDoList extends StatefulWidget {
+  var name;
+  var dateTime;
   var title;
-  ToDoList({Key? key, this.title}) : super(key: key);
+  ToDoList({
+    Key? key,
+    this.title,
+    this.name,
+    this.dateTime,
+  }) : super(key: key);
 
   @override
   State<ToDoList> createState() => _ToDoListState();
@@ -57,9 +64,11 @@ class _ToDoListState extends State<ToDoList> {
         body: TabBarView(
           children: [
             InProgress(
+              name: widget.name,
               title: widget.title,
             ),
             Completed(
+              name: widget.name,
               title: widget.title,
             )
           ],

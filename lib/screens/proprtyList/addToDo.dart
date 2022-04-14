@@ -9,8 +9,9 @@ import 'package:my_fsg/theme/colors.dart';
 
 // ignore: must_be_immutable
 class AddToDo extends StatefulWidget {
+  var name;
   var address;
-  AddToDo({Key? key, this.address}) : super(key: key);
+  AddToDo({Key? key, this.address, this.name}) : super(key: key);
 
   @override
   State<AddToDo> createState() => _AddToDoState();

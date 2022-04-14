@@ -40,149 +40,209 @@ class PdfApi {
           },
           build: (Context context) {
             return <Widget>[
-              Column(children: [
-                Row(
-                  children: [
-                    Text(
-                      'Arbeitsscheine',
-                      style: pdfStyle,
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      name + ' - ' + address,
-                      style: pdfStyle,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [
-                      Padding(
-                        padding: EdgeInsets.only(
-                          right: 4,
+              Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Arbeitsscheine',
+                        style: pdfStyle,
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        name + ' - ' + address,
+                        style: pdfStyle,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                            right: 4,
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Date',
+                                style: pdfStyleSmall,
+                              ),
+                              Text(
+                                dateTime.toString().split(' ').first,
+                                style: pdfStyle,
+                              ),
+                            ],
+                          ),
                         ),
-                        child: Column(
+                        SizedBox(width: 20),
+                        Column(
                           children: [
                             Text(
-                              'Date',
+                              'Time',
                               style: pdfStyleSmall,
                             ),
                             Text(
-                              dateTime.toString().split(' ').first,
+                              dateTime
+                                  .toString()
+                                  .split(' ')
+                                  .last
+                                  .split('.')
+                                  .first,
                               style: pdfStyle,
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(width: 20),
-                      Column(
-                        children: [
-                          Text(
-                            'Time',
-                            style: pdfStyleSmall,
-                          ),
-                          Text(
-                            dateTime
-                                .toString()
-                                .split(' ')
-                                .last
-                                .split('.')
-                                .first,
-                            style: pdfStyle,
-                          ),
-                        ],
-                      ),
-                    ]),
-                    Container(
-                      width: 250,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Customer',
-                            style: pdfStyleSmall,
-                          ),
-                          Text(
-                            name,
-                            style: pdfStyleSmall,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'Address',
-                            style: pdfStyleSmall,
-                          ),
-                          Wrap(
-                            children: [
-                              Text(
-                                address,
-                                style: pdfStyleSmall,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Description',
-                          style: pdfStyleSmall,
-                        ),
-                        Text(
-                          'Description here',
-                          style: pdfStyle,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                // Container(
-                //   child: Image(netImage),
-                // ),
-                // List.generate(
-                //   images.length,
-                //   (index) => Container(
-                //     height: 200,
-                //     width: 300,
-                //   ),
-                // ),
-
-                Container(
-                  width: 500,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                      ]),
                       Container(
-                        width: 500,
-                        height: 300,
-                        child: Image(netImage),
+                        width: 250,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Customer',
+                              style: pdfStyleSmall,
+                            ),
+                            Text(
+                              name,
+                              style: pdfStyleSmall,
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'Address',
+                              style: pdfStyleSmall,
+                            ),
+                            Wrap(
+                              children: [
+                                Text(
+                                  address,
+                                  style: pdfStyleSmall,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ])
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Description',
+                            style: pdfStyleSmall,
+                          ),
+                          Text(
+                            'Description here',
+                            style: pdfStyle,
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  // Container(
+                  //   child: Image(netImage),
+                  // ),
+                  // List.generate(
+                  //   images.length,
+                  //   (index) => Container(
+                  //     height: 200,
+                  //     width: 300,
+                  //   ),
+                  // ),
+                  SizedBox(
+                    height: 350,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Photos',
+                        style: pdfStyle,
+                      ),
+                    ],
+                  ),
+                  Wrap(alignment: WrapAlignment.spaceAround, children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 350,
+                          height: 250,
+                          child: Image(netImage),
+                        ),
+                        Text(
+                          dateTime.toString().split(' ').last.split('.').first,
+                          style: pdfStyleSmall,
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 350,
+                          height: 250,
+                          child: Image(netImage),
+                        ),
+                        Text(
+                          dateTime.toString().split(' ').last.split('.').first,
+                          style: pdfStyleSmall,
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 350,
+                          height: 250,
+                          child: Image(netImage),
+                        ),
+                        Text(
+                          dateTime.toString().split(' ').last.split('.').first,
+                          style: pdfStyleSmall,
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 5),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 350,
+                          height: 250,
+                          child: Image(netImage),
+                        ),
+                        Text(
+                          dateTime.toString().split(' ').last.split('.').first,
+                          style: pdfStyleSmall,
+                        ),
+                      ],
+                    ),
+                  ]),
+                ],
+              ),
             ];
           },
           footer: (context) {
