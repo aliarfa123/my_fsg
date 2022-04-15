@@ -95,154 +95,139 @@ class _ToDoDetailState extends State<ToDoDetail> {
         ),
         body: Padding(
           padding: EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'Date: ' + widget.date.toString().split(' ').first,
-                    style: TextStyle(
-                      fontSize: 20,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Date: ' + widget.date.toString().split(' ').first,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  Text(
-                    'Time: ' +
-                        widget.date.toString().split(' ').last.split('.').first,
-                    style: TextStyle(
-                      fontSize: 20,
+                    Text(
+                      'Time: ' +
+                          widget.date
+                              .toString()
+                              .split(' ')
+                              .last
+                              .split('.')
+                              .first,
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Wrap(
-                children: [
-                  Text(
-                    widget.name + ' - ' + widget.address,
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'Images:',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w400,
+                  ],
+                ),
+                Divider(),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                Wrap(
+                  children: [
+                    Text(
+                      widget.name + ' - ' + widget.address,
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              if (newList.isNotEmpty)
-                SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      newList.length,
-                      (index) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 120,
-                          width: 110,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                newList[index],
+                  ],
+                ),
+                Divider(),
+
+                Row(
+                  children: [
+                    Text(
+                      'Images:',
+                      style: TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Divider(),
+
+                if (newList.isNotEmpty)
+                  SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                        newList.length,
+                        (index) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 120,
+                            width: 110,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  newList[index],
+                                ),
                               ),
                             ),
                           ),
-                          // child: Image(
-                          //   image: NetworkImage(
-                          //     newList[index],
-                          //   ),
-                          // ),
                         ),
                       ),
                     ),
-                  ),
-                )
-              else
-                Center(
-                  child: Container(
-                    height: 150,
-                    width: 150,
-                    child: CircularProgressIndicator(
-                      color: primary,
+                  )
+                else
+                  Center(
+                    child: Container(
+                      height: 150,
+                      width: 150,
+                      child: CircularProgressIndicator(
+                        color: primary,
+                      ),
                     ),
                   ),
-                ),
-              // Expanded(
-              //   child: StreamBuilder(
-              //     stream: FirebaseDatabase.instance
-              //         .ref('Images')
-              //         .child(
-              //           widget.title.toString(),
-              //         )
-              //         .orderByKey()
-              //         .onValue
-              //         .asBroadcastStream(),
-              //     builder:
-              //         (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              //       final tilesList = <Widget>[];
-              //       if (snapshot.hasData) {
-              //         final address = Map<String, dynamic>.from(
-              //             (snapshot.data!).snapshot.value);
-              //         address.forEach((key, value) {
-              //           final nextAdress = Map<String, dynamic>.from(value);
-              //           final adressTile = Padding(
-              //             padding: EdgeInsets.all(9),
-              //             child: GestureDetector(
-              //                 onTap: () {},
-              //                 child: Container(
-              //                   decoration: BoxDecoration(
-              //                       color: Colors.white,
-              //                       border: Border.all(color: Colors.grey),
-              //                       borderRadius: BorderRadius.circular(10),
-              //                       boxShadow: [
-              //                         BoxShadow(
-              //                           color: Colors.grey.withOpacity(0.5),
-              //                           blurRadius: 4,
-              //                           offset: Offset(0, 4),
-              //                         )
-              //                       ]),
-              //                   height: MediaQuery.of(context).size.height * 0.11,
-              //                   child: Center(
-              //                     child: ListTile(
-              //                       title: Text(
-              //                         nextAdress.keys.toString(),
-              //                       ),
-              //                       // title: Image(
-              //                       //   image: NetworkImage(
-              //                       //     nextAdress.keys.toString(),
-              //                       //   ),
-              //                       // ),
-              //                     ),
-              //                   ),
-              //                 )),
-              //           );
-              //           tilesList.add(adressTile);
-              //         });
-              //       }
-              //       return ListView(
-              //         children: tilesList,
-              //       );
-              //     },
-              //   ),
-              // ),
-            ],
+                Divider(),
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Report',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        hintStyle: TextStyle(
+                          fontSize: 20,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: primary),
+                        ),
+                        labelText: 'Report text here',
+                        fillColor: Colors.grey.shade100,
+                        filled: true,
+                        focusColor: primary,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:my_fsg/screens/bottomNavBar.dart';
 import 'package:my_fsg/theme/colors.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
@@ -154,9 +155,11 @@ class _MyProfileState extends State<MyProfile> {
                     icon: Icon(Icons.image),
                     onPressed: () {
                       _getFromGallery();
-                      setState(() {
-                        putImage(widget.email.toString());
-                      });
+                      setState(
+                        () {
+                          putImage(widget.email.toString());
+                        },
+                      );
                     },
                   ),
                 )

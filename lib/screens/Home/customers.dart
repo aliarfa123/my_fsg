@@ -40,17 +40,7 @@ class _CustomersPageState extends State<CustomersPage> {
                     final adressTile = Padding(
                       padding: EdgeInsets.all(9),
                       child: GestureDetector(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => PropertyDetail(
-                          //       image: nextAdress['image_link'].toString(),
-                          //       address: nextAdress['Address'].toString(),
-                          //     ),
-                          //   ),
-                          // );
-                        },
+                        onTap: () {},
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.white,

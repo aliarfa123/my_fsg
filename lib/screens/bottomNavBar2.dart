@@ -24,7 +24,7 @@ class _RootAppCustState extends State<RootAppCust> {
 
   Widget getBody() {
     List<Widget> pages = [
-      const HomePage(),
+      HomePage(),
       MyProfile(
         email: widget.email,
       ),

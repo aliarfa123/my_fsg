@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:my_fsg/screens/proprtyList/pdf.dart';
 import 'package:my_fsg/theme/colors.dart';
 import '../proprtyList/propertydetial.dart';
 
@@ -63,10 +64,6 @@ class _HomePageState extends State<HomePage> {
           imageList.add(values['image_link']);
         });
       });
-      // setState(() {
-      //   newDataList = newList;
-      // });
-      //print(imageList);
     });
   }
 
@@ -152,10 +149,14 @@ class _HomePageState extends State<HomePage> {
   List<String> emailList = [];
   List<String> telList = [];
   List<String> imageList = [];
-  onItemChanged(String value) {
+  onItemChanged(value) {
     setState(() {
       newDataList = newList
-          .where((string) => string.toLowerCase().contains(value.toLowerCase()))
+          .where(
+            (string) => string.toLowerCase().contains(
+                  value.toLowerCase(),
+                ),
+          )
           .toList();
     });
   }
@@ -220,7 +221,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Column(
               children: List.generate(
-                imageList.length,
+                newDataList.length,
                 (index) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(

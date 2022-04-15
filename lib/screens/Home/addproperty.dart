@@ -112,7 +112,8 @@ class _AddPropertyState extends State<AddProperty> {
                       ),
                     ),
                   ),
-                  Text("Please don't use special charachters like # or _ etc.")
+                  Text(
+                      "Please don't use special charachters like # , . , [ , ] ,/")
                 ],
               ),
             ),
@@ -303,14 +304,13 @@ class _AddPropertyState extends State<AddProperty> {
             GestureDetector(
               onTap: () {
                 if (adressController.text.isNotEmpty &&
-                        nameController.text.isNotEmpty &&
-                        contactController.text.isNotEmpty &&
-                        emailController.text.isNotEmpty &&
-                        telController.text.isNotEmpty &&
-                        notesController.text.isNotEmpty &&
-                        descController.text.isNotEmpty
-                    // &&                    _image != null
-                    ) {
+                    nameController.text.isNotEmpty &&
+                    contactController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
+                    telController.text.isNotEmpty &&
+                    notesController.text.isNotEmpty &&
+                    descController.text.isNotEmpty &&
+                    _image != null) {
                   String pushKey = db.push().key.toString();
                   db
                       .child('Addresses')
@@ -354,12 +354,12 @@ class _AddPropertyState extends State<AddProperty> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          content: Text('Form Filled Successfully'),
+                          content: Text('Form Filled Successfully please wait'),
                         );
                       }).then(
                     ((value) => Future.delayed(
                             const Duration(
-                              seconds: 1,
+                              seconds: 2,
                             ), () {
                           setState(() {
                             Navigator.pushReplacement(

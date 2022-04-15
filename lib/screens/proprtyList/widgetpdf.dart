@@ -19,7 +19,7 @@ class PdfApi {
     List images,
   ) async {
     final pdf = Document();
-    final netImage = await networkImage(images[0]);
+    final netImage = await networkImage(img);
     final logoImage = MemoryImage(
       (await rootBundle.load('assets/images/logo.png')).buffer.asUint8List(),
     );
