@@ -21,7 +21,9 @@ class PdfApi {
     final pdf = Document();
     final netImage = await networkImage(img);
     final logoImage = MemoryImage(
-      (await rootBundle.load('assets/images/logo.png')).buffer.asUint8List(),
+      (await rootBundle.load('assets/images/logo_pdf.png'))
+          .buffer
+          .asUint8List(),
     );
     pdf.addPage(
       MultiPage(
@@ -33,7 +35,7 @@ class PdfApi {
               children: [
                 Image(
                   logoImage,
-                  height: 80,
+                  width: 100,
                 ),
               ],
             );
@@ -158,16 +160,6 @@ class PdfApi {
                       ),
                     ],
                   ),
-                  // Container(
-                  //   child: Image(netImage),
-                  // ),
-                  // List.generate(
-                  //   images.length,
-                  //   (index) => Container(
-                  //     height: 200,
-                  //     width: 300,
-                  //   ),
-                  // ),
                   SizedBox(
                     height: 350,
                   ),
@@ -252,13 +244,17 @@ class PdfApi {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                     Text('Address', style: footerStyle),
-                    Text('Address here for me', style: footerStyleSmall),
+                    Text('FSG Immobillienservice', style: footerStyleSmall),
+                    Text('Lohhof 28', style: footerStyleSmall),
+                    Text('20535 Hamburg', style: footerStyleSmall),
                   ]),
-                  Column(children: [
+                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
                     Text('Contact', style: footerStyle),
-                    Text('Contact for me', style: footerStyleSmall),
+                    Text('Tel: 01778377976', style: footerStyleSmall),
+                    Text('jg@fsg-immobillineservice.de',
+                        style: footerStyleSmall),
                   ]),
                 ],
               ),
@@ -305,5 +301,5 @@ var footerStyle = TextStyle(
 );
 var footerStyleSmall = TextStyle(
   // fontWeight: FontWeight.bold,
-  fontSize: 15,
+  fontSize: 10,
 );
